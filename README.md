@@ -14,13 +14,13 @@ Sending mass mails in your Laravel applications with ease.
 
 ## Installation
 
-In your project's `composer.json`, add the following to the `require` key.
+Add this package to your project's `composer.json` file by running the following command
 
 ```
 composer require simmatrix/laravel-mass-mailer
 ```
 
-Run the following command to install the package
+Install the package by running the following command
 
 ```
 composer update
