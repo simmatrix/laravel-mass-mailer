@@ -1,0 +1,85 @@
+[
+  {
+    "applyTemplate": {
+      "className": "Simmatrix\\MassMailer\\Attributes\\ApplyTemplate",
+      "label": "Apply Template",
+      "name": "applyTemplate",
+      "params": {
+        "shouldApplyTemplate": true
+      }
+    }
+  },
+  {
+    "messageContent": {
+      "className": "Simmatrix\\MassMailer\\Attributes\\MessageContent",
+      "label": "Message",
+      "name": "messageContent",
+      "params": {
+        "data": ""
+      }
+    }
+  },
+  {
+    "recipientList": {
+      "className": "Simmatrix\\MassMailer\\Attributes\\RecipientList",
+      "label": "To",
+      "name": "recipientList",
+      "params": {
+        "data": [
+          
+        ]
+      }
+    }
+  },
+  {
+    "sendToAllSubscribers": {
+      "className": "Simmatrix\\MassMailer\\Attributes\\SendToAllSubscribers",
+      "label": "Send To All Subscribers",
+      "name": "sendToAllSubscribers",
+      "params": {
+        "sendToAllSubscribers": false
+      }
+    }
+  },
+  {
+    "senderEmail": {
+      "className": "Simmatrix\\MassMailer\\Attributes\\SenderEmail",
+      "label": "Sender Email",
+      "name": "senderEmail",
+      "params": {
+        "data": "hello@example.com"
+      }
+    }
+  },
+  {
+    "senderName": {
+      "className": "Simmatrix\\MassMailer\\Attributes\\SenderName",
+      "label": "Sender Name",
+      "name": "senderName",
+      "params": {
+        "data": "Example"
+      }
+    }
+  },
+  {
+    "subject": {
+      "className": "Simmatrix\\MassMailer\\Attributes\\Subject",
+      "label": "Subject",
+      "name": "subject",
+      "params": {
+        "data": ""
+      }
+    }
+  },
+  {
+    "title": {
+      "className": "Simmatrix\\MassMailer\\Attributes\\Title",
+      "label": "Title",
+      "name": "title",
+      "params": {
+        "data": ""
+      }
+    }
+  }
+]
+
