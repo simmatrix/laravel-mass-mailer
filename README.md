@@ -20,12 +20,6 @@ Add this package to your project's `composer.json` file by running the following
 composer require simmatrix/laravel-mass-mailer
 ```
 
-Install the package by running the following command
-
-```
-composer update
-```
-
 Add both of the service providers below to your `config/app.php` file, in the `providers` array.
 
 ```

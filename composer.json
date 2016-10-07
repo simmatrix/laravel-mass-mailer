@@ -2,7 +2,7 @@
     "name": "simmatrix/laravel-mass-mailer",
     "description": "Mass Mailer Package for Laravel",
     "require": {
-        "bogardo/mailgun": "^4.0",
+        "bogardo/mailgun": "~3.1",
         "php": ">=5.3.0",
         "illuminate/support": "~5.1",
         "chalcedonyt/laravel-valueobject": "1.*",
