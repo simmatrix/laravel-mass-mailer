@@ -30,8 +30,8 @@ class {{ $class_name }} extends MassMailerAttributeAbstract implements MassMaile
     {
         return MassMailerAttributeParams::create([
             'className' => {{ $class_name }}::class,
-            'label' => {{ $class_name }},
-            'name' => {{ $name }},
+            'label' => '{{ $class_name }}',
+            'name' => '{{ $name }}',
             'params' => $this -> getParams( $this ),
         ]);
     }

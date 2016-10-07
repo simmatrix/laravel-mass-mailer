@@ -61,6 +61,6 @@ class MassMailerAttribute
 	public static function extract( MassMailerParams $params, string $attribute, string $targeted_param = NULL )
 	{
 		$targeted_attribute = $params -> attributes[ $attribute ];
-		return $targeted_param ? $targeted_attribute -> { $targeted_param } : $targeted_attribute -> { $attribute };
+		return $targeted_param ? $targeted_attribute -> { $targeted_param } : $targeted_attribute -> data;
 	}
 }

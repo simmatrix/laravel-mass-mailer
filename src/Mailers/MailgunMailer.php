@@ -9,6 +9,7 @@ use Simmatrix\MassMailer\MailingListManager\Mailgun as MailingListManager;
 use Simmatrix\MassMailer\MassMailerAttribute;
 use Mailgun\Mailgun as MailgunCore;
 use Mailgun;
+use Log;
 
 class MailgunMailer implements MassMailerInterface
 {
@@ -48,7 +49,7 @@ class MailgunMailer implements MassMailerInterface
 	{
         if ( $params -> mailingList ) {
         
-            Mailgun::send( $params -> viewTemplate, $params -> viewParameters, function( $message ) use ( $params, $callback ){
+            $response = Mailgun::send( $params -> viewTemplate, $params -> viewParameters, function( $message ) use ( $params, $callback ){
                 $message -> to( $params -> mailingList ) -> subject( $params -> subject );
                 $message -> from( $params -> senderEmail, $params -> senderName );
                 $message -> replyTo( config('mail.from.address'), config('mail.from.name') );
@@ -57,7 +58,7 @@ class MailgunMailer implements MassMailerInterface
                 $message -> trackOpens( self::SHOULD_TRACK_OPENS );
 
                 // Tie to a specific Mailgun campaign if it is being set to send to all of the subscribers
-                if ( MassMailerAttribute::extract( $params, $targeted_attribute = 'sendToAllSubscribers' ) ) {
+                if ( MassMailerAttribute::extract( $params, $targeted_attribute = 'sendToAllSubscribers', $targeted_param = 'shouldSendToAllSubscribers' ) ) {
                     $campaign_id = $this -> createCampaign( $params );
                     $message -> campaign( $campaign_id );
                 }
@@ -65,6 +66,16 @@ class MailgunMailer implements MassMailerInterface
                 $callback();
             });
 
+            if ( $response -> http_response_code !== 200 ) {
+                Log::error( "An error occured while sending the mass mails with the subject " . $params -> subject );
+                return FALSE;
+            } 
+
+            return TRUE;
+
+        } else {
+            Log::warning('No mailing list specified for mass mails with the subject of ' . $params -> subject);
+            return FALSE;
         }
 	}
 

@@ -17,7 +17,7 @@
         | Namespaces
         |--------------------------------------------------------------------------
         */
-        'app_namespace' => '\\App\\MassMailer\\',
+        'app_namespace' => 'App\\MassMailer\\',
         'package_namespace' => '\\Simmatrix\\MassMailer\\',
 
         /*

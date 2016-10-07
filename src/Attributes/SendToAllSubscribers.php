@@ -11,7 +11,7 @@ class SendToAllSubscribers extends MassMailerAttributeAbstract implements MassMa
 	/**
 	 * @var Boolean $sendToAllSubscribers
 	 */
-	public $sendToAllSubscribers = FALSE;
+	public $shouldSendToAllSubscribers = FALSE;
 
 	/**
 	 * @return Array An array that can be used in the blade template

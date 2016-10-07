@@ -50,10 +50,10 @@ class MailgunMailingListManager implements MassMailerMailingListInterface
      */
     public static function get( MassMailerParams $params )
     {
-        if ( count( $params -> recipientList ) > 0 || MassMailerAttribute::extract( $params, 'sendToAllSubscribers' ) ) {
+        if ( count( $params -> recipientList ) > 0 || MassMailerAttribute::extract( $params, $targeted_attribute = 'sendToAllSubscribers', $targeted_param = 'shouldSendToAllSubscribers' ) ) {
 
             // -- if it is being set to send to all of the subscribers, then use the default mailing list
-            if ( MassMailerAttribute::extract( $params, 'sendToAllSubscribers' ) ) {
+            if ( MassMailerAttribute::extract( $params, $targeted_attribute = 'sendToAllSubscribers', $targeted_param = 'shouldSendToAllSubscribers' ) ) {
                 
                 return sprintf("%s@%s", config('mass_mailer.mailing_list'), env('MAILGUN_DOMAIN'));
 

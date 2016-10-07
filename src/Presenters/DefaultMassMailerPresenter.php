@@ -15,7 +15,7 @@ class DefaultMassMailerPresenter extends MassMailerPresenterAbstract implements 
 	public function __construct( MassMailerParams $params )
 	{
 		parent::__construct( $params );
-		self::setParameters();
+		self::setParameters( $params );
 	}
 
 	/**
@@ -33,7 +33,7 @@ class DefaultMassMailerPresenter extends MassMailerPresenterAbstract implements 
 	 *
 	 * @return void
 	 */
-    private function setParameters()
+    private function setParameters( MassMailerParams $params )
     {
         parent::setViewParameters([
             'testing' => '--displaying a custom parameter in presenter object--',

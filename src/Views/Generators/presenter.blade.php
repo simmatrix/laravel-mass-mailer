@@ -16,7 +16,7 @@ class {{ $class_name }} extends MassMailerPresenterAbstract implements MassMaile
     public function __construct( MassMailerParams $params )
     {
         parent::__construct( $params );
-        self::setParameters();
+        self::setParameters( $params );
     }
 
     /**
@@ -34,11 +34,11 @@ class {{ $class_name }} extends MassMailerPresenterAbstract implements MassMaile
      *
      * @return void
      */
-    public function setParameters()
+    public function setParameters( MassMailerParams $params )
     {
         parent::setViewParameters([     
             // 'xxx' => 'yyy',
-            // 'yourAttributeName' => MassMailerAttribute::extract( $params, $yourAttributeName, $yourTargetedAttributeProperty ),
+            // 'yourAttributeName' => MassMailerAttribute::extract( $params, $yourAttributeName, $yourTargetedAttributeParam ),
         ]);
     }
 }

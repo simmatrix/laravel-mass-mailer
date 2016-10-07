@@ -36,7 +36,7 @@ class MassMailerArchive
 	 */
 	private static function prepareArchive( MassMailerParams $params )
 	{
-		$view = View::make( $params -> viewTemplate, $params -> viewParameters );
+		$view = View::make( $params -> viewTemplate, array_merge( $params -> viewParameters, ['is_archive' => TRUE] ) );
 		return $view -> render();
 	}
 

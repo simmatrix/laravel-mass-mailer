@@ -7,6 +7,8 @@ use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
 
 abstract class MassMailerPresenterAbstract implements MassMailerPresenterInterface
 {
+	const IS_NOT_ARCHIVE = FALSE;
+
 	/**
 	 * @var Array $viewParameters The array of parameters for the use in the blade view template
 	 */
@@ -64,6 +66,7 @@ abstract class MassMailerPresenterAbstract implements MassMailerPresenterInterfa
 			'archiveLink' 	=> 	$this -> mailerParameters -> archiveLink,
 			'senderEmail' 	=> 	$this -> mailerParameters -> senderEmail,
 			'senderName' 	=> 	$this -> mailerParameters -> senderName,
+			'is_archive'    =>  self::IS_NOT_ARCHIVE
 		];
 	}
 }

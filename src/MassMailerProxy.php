@@ -21,7 +21,7 @@ class MassMailerProxy
 	 */
 	public static function send( MassMailerParams $params )
 	{
-		MassMailerFactory::createMailer() -> send( $params, function() use( $params ){
+		return MassMailerFactory::createMailer() -> send( $params, function() use( $params ){
 			self::saveHistory( $params );
 		});
 	}
