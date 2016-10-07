@@ -18,7 +18,7 @@
             "packagist": false,
             "type": "git",
             "url": "https://github.com/simmatrix/Mailgun.git"
-        },
+        }
     ],    
     "license": "MIT",
     "authors": [
