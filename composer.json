@@ -17,7 +17,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/simmatrix/Mailgun.git"
+            "url": "https://github.com/simmatrix/mailgun.git"
         }
     ],    
     "license": "MIT",
