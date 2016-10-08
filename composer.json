@@ -1,9 +1,8 @@
 {
     "name": "simmatrix/laravel-mass-mailer",
     "description": "Mass Mailer Package for Laravel",
-    "minimum-stability": "dev",
     "require": {
-        "bogardo/mailgun": "dev-custom@dev",
+        "bogardo/mailgun": "dev-master",
         "php": ">=5.3.0",
         "illuminate/support": "~5.1",
         "chalcedonyt/laravel-valueobject": "1.*",
@@ -13,13 +12,7 @@
         "phpunit/phpunit": "^5.5",
         "orchestra/testbench": "^3.3",
         "fzaninotto/faker": "^1.6"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/simmatrix/mailgun.git"
-        }
-    ],    
+    },   
     "license": "MIT",
     "authors": [
         {
