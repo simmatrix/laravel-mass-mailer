@@ -26,5 +26,8 @@
             "name": "Wong Lai Sim",
             "email": "simmatrix100@gmail.com"
         }
-    ]
+    ],
+    "config": {
+        "preferred-install": "dist"
+    }
 }
