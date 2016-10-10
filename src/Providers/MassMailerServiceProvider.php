@@ -25,11 +25,9 @@ class MassMailerServiceProvider extends ServiceProvider
         $this -> publishes([
             __DIR__ . '/../Config/mass_mailer.php' => config_path('mass_mailer.php'),
             __DIR__ . '/../Views/Templates' => resource_path('views/vendor/simmatrix/mass-mailer'),
+            __DIR__ . '/../Migrations' => database_path('migrations'),
         ]);
 
-        // will auto-run when user execute `php artisan migrate`
-        // no need to publish the migration files to the application's database/migrations directory
-        $this -> loadMigrationsFrom( __DIR__ . '/../Migrations' );
         $this -> loadViewsFrom( __DIR__ . '/../Views', 'mass_mailer' );
     }
 
