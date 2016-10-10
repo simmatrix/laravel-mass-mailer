@@ -2,7 +2,7 @@
 
 Sending mass mails in your Laravel applications with ease. This is a wrapper for different mail service providers.
 
-> Current supports the sending of mass mails using Laravel's default Mail facade and [Mailgun's Official SDK](https://github.com/mailgun/mailgun-php)
+> Currently supports the sending of mass mails using Laravel's default Mail facade and [Mailgun's Official SDK](https://github.com/mailgun/mailgun-php)
 
 > It is recommended to use third party mail service such as Mailgun instead of depending on Laravel's default Mail facade because with Laravel's Mail facade, in order to protect the privacy of all subscribers, the field "BCC" is being used instead of "TO"
 
@@ -43,6 +43,8 @@ Open `config/mass_mailer.php`, then set your default mailing list address (e.g. 
 ```
 'mailing_list' => 'test',
 ```
+
+In the same file, do fill in the section `Admin Email Address`, `Queue Name (optional)` as well.
 
 Make sure that in your `.env` file, the value of `QUEUE_DRIVER` is NOT `sync` as this will disable all queues. Any values other than `sync` is acceptable
 ```
