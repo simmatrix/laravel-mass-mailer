@@ -59,6 +59,18 @@ Also do make sure that you have properly setup your `config/mail.php`, particula
 ],
 ```    
 
+### Running Queue in your server
+
+Run the following command to listen to and execute any incoming queued jobs
+```
+sudo nohup php artisan queue:work --daemon >> storage/logs/laravel.log &
+```
+
+Whenever you make changes to your code or deploy to your server, you would need to run
+```
+php artisan queue:restart
+```
+
 ## Usage
 
 ### Sending Mass Emails
