@@ -89,7 +89,7 @@ Firstly you would need to pull the JSON data to build up your frontend User Inte
 return MassMailer::getAttributes();
 ```
 
-### 2(B). Creating Your Custom Attributes
+### 1(B). Creating Your Custom Attributes
 
 Default attributes that comes with the package are:
   - "Subject" Field
