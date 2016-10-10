@@ -29,6 +29,7 @@ class MassMailerHistory
 			'mailing_list' => $params -> mailingList,
 			'params' => $params,
 			'archive_link' => $params -> archiveLink,
+			'success' => $params -> deliveryStatus,
 		]);
 	}
 }

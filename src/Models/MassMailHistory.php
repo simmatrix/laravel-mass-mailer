@@ -11,7 +11,8 @@ class MassMailHistory extends Model
 		'subject',
 		'mailing_list', 
 		'params',
-		'archive_link'
+		'archive_link',
+		'success',
 	];
 	public $timestamps = true;
 }

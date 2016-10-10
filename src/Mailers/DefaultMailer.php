@@ -4,10 +4,11 @@ namespace Simmatrix\MassMailer\Mailers;
 
 use Simmatrix\MassMailer\Interfaces\MassMailerInterface;
 use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
+use Simmatrix\MassMailer\Mailers\MassMailerAbstract;
 use Mail;
 use Log;
 
-class DefaultMailer implements MassMailerInterface
+class DefaultMailer extends MassMailerAbstract implements MassMailerInterface
 {
     /**
      * Send a new message.
@@ -16,14 +17,15 @@ class DefaultMailer implements MassMailerInterface
      *
      * @return Boolean To indicate whether the delivery is successful or not
      */	
-	public function send( MassMailerParams $params, $callback )
+	public static function send( MassMailerParams $params, $callback )
 	{
 		Mail::send( $params -> viewTemplate, $params -> viewParameters, function( $message ) use( $params, $callback ){
-            $message -> to( $params -> recipientList ) -> subject( $params -> subject );
+            $message -> bcc( $params -> recipientList ) -> subject( $params -> subject );
             $message -> from( $params -> senderEmail, $params -> senderName );
-            $message -> replyTo( config('mail.from.address'), config('mail.from.name') );
-            $callback();
-        });
+            $message -> replyTo( config('mail.from.address'), config('mail.from.name') );            
+        });        
+
+        $status = FALSE;
 
         if( count( Mail::failures() ) > 0 ) {
 
@@ -34,14 +36,16 @@ class DefaultMailer implements MassMailerInterface
                 $failed_emails[] = $email_address;
             }
 
-            Log::error('Emails affected: ' . json_encode($failed_emails));
-
-            return FALSE;
+            $error_message = 'Emails affected: ' . json_encode($failed_emails);
+            parent::notifyError( $params -> subject, $error_message );
 
         } else {
 
-            return TRUE;
+            $status = TRUE;
 
         }
+
+        $callback( $status );
+        return $status;
 	}
 }

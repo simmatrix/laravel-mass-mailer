@@ -6,5 +6,5 @@ use \Simmatrix\MassMailer\ValueObjects\MassMailerParams;
 
 interface MassMailerInterface 
 {
-	public function send( MassMailerParams $params, $callback );
+	public static function send( MassMailerParams $params, $callback );
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Simmatrix\MassMailer\MassMailerAttribute;
 use Simmatrix\MassMailer\MassMailerArchive;
 use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
+use Simmatrix\MassMailer\ValueObjects\MassMailerCustomParams;
 use Simmatrix\MassMailer\MassMailerMailingList;
 use View;
 
@@ -15,7 +16,7 @@ class MassMailerParameter
      * @param Array $data
      * @return MassMailerParams An instance of Simmatrix\MassMailer\ValueObjects\MassMailerParams
      */ 
-    public static function create( Request $request, string $presenter_class_name )
+    public static function create( Request $request, MassMailerCustomParams $custom_params )
     {
         $data = $request -> input('params');
 
@@ -52,12 +53,12 @@ class MassMailerParameter
         $mailer_params = MassMailerParams::create( $final_params );
 
         // Dealing with the presenter parameters
-        $presenter = MassMailerPresenter::create( $presenter_class_name, $mailer_params );
+        $presenter = MassMailerPresenter::create( $custom_params -> presenterClassName, $mailer_params );
         $mailer_params -> viewTemplate = $presenter -> getTemplate();
         $mailer_params -> viewParameters = $presenter -> getViewParameters();
 
         // Dealing with the mailng list 
-        $mailer_params -> mailingList = MassMailerMailingList::get( $mailer_params );  
+        $mailer_params -> mailingList = MassMailerMailingList::get( $mailer_params, $custom_params );  
 
         // Create the archive link
         $mailer_params -> archiveLink = MassMailerArchive::getLink( $mailer_params );

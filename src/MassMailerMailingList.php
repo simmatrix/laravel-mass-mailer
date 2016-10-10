@@ -4,6 +4,7 @@ namespace Simmatrix\MassMailer;
 
 use Simmatrix\MassMailer\Factories\MassMailerFactory;
 use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
+use Simmatrix\MassMailer\ValueObjects\MassMailerCustomParams;
 use Simmatrix\MassMailer\Interfaces\MassMailerMailingListInterface;
 
 class MassMailerMailingList implements MassMailerMailingListInterface
@@ -28,16 +29,16 @@ class MassMailerMailingList implements MassMailerMailingListInterface
 		$manager::delete( $mailing_list_address );
 	}
 
-	public static function get( MassMailerParams $params )
+	public static function get( MassMailerParams $params, MassMailerCustomParams $custom_params )
 	{
 		$manager = self::getManager();
-		return $manager::get( $params );
+		return $manager::get( $params, $custom_params );
 	}	
 
-	public static function getSubscribers( string $mailing_list_address = NULL, int $limit, int $skip, bool $subscribed )
+	public static function getSubscribers( string $mailing_list_address = NULL, int $limit, bool $subscribed )
 	{
 		$manager = self::getManager();
-		return $manager::getSubscribers( $mailing_list_address, $limit, $skip, $subscribed );
+		return $manager::getSubscribers( $mailing_list_address, $limit, $subscribed );
 	}
 
     public static function addSubscribers( array $subscribers, string $mailing_list_address = NULL )
@@ -45,10 +46,4 @@ class MassMailerMailingList implements MassMailerMailingListInterface
     	$manager = self::getManager();
 		$manager::addSubscribers( $subscribers, $mailing_list_address );
     }
-
-	public static function isExist( string $mailing_list_address )
-	{
-		$manager = self::getManager();
-		return $manager::isExist( $mailing_list_address );
-	}
 }

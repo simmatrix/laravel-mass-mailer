@@ -7,11 +7,11 @@ use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
 use Simmatrix\MassMailer\ValueObjects\Mailers\Mailgun\MailingList;
 use Simmatrix\MassMailer\MailingListManager\Mailgun as MailingListManager;
 use Simmatrix\MassMailer\MassMailerAttribute;
-use Mailgun\Mailgun as MailgunCore;
-use Mailgun;
+use Simmatrix\MassMailer\Mailers\MassMailerAbstract;
+use Mailgun\Mailgun;
 use Log;
 
-class MailgunMailer implements MassMailerInterface
+class MailgunMailer extends MassMailerAbstract implements MassMailerInterface
 {
     /**
      * Mailing List access level, one of: readonly (default), members or everyone
@@ -43,39 +43,56 @@ class MailgunMailer implements MassMailerInterface
      *
      * @param Simmatrix\MassMailer\ValueObjects\MassMailerParams  $params An object holding all data needed for the delivery of email
      *
-     * @return object Mailgun response containing http_response_body and http_response_code
+     * @return Boolean To indicate whether the delivery is successful or not
      */	
-	public function send( MassMailerParams $params, $callback )
+	public static function send( MassMailerParams $params, $callback )
 	{
+        /**
+         * Reason for needing a mailing list
+         * To prevent breaking the privacy policy because without a mailing list, each recipient will be able to see other recipients' email addresses in the "TO" field
+         */
         if ( $params -> mailingList ) {
-        
-            $response = Mailgun::send( $params -> viewTemplate, $params -> viewParameters, function( $message ) use ( $params, $callback ){
-                $message -> to( $params -> mailingList ) -> subject( $params -> subject );
-                $message -> from( $params -> senderEmail, $params -> senderName );
-                $message -> replyTo( config('mail.from.address'), config('mail.from.name') );
-                $message -> tracking( self::SHOULD_TRACK );
-                $message -> trackClicks( self::SHOULD_TRACK_CLICKS );
-                $message -> trackOpens( self::SHOULD_TRACK_OPENS );
+            
+            $mailgun = self::getMailgunMailer();
+            $domain = array_last( explode( '@', $params -> mailingList ) );
 
-                // Tie to a specific Mailgun campaign if it is being set to send to all of the subscribers
-                if ( MassMailerAttribute::extract( $params, $targeted_attribute = 'sendToAllSubscribers', $targeted_param = 'shouldSendToAllSubscribers' ) ) {
-                    $campaign_id = $this -> createCampaign( $params );
-                    $message -> campaign( $campaign_id );
-                }
+            $mailgun_params = [
+                'from' => $params -> senderEmail,
+                'to' => $params -> mailingList,
+                'subject' => $params -> subject,
+                'html' => parent::getMessageContent( $params ),
+                'o:tracking' => self::SHOULD_TRACK,
+                'o:tracking-clicks' => self::SHOULD_TRACK_CLICKS,
+                'o:tracking-opens' => self::SHOULD_TRACK_OPENS,
+            ];
 
-                $callback();
-            });
+            // Tie to a specific Mailgun campaign if it is being set to send to all of the subscribers
+            if ( MassMailerAttribute::extract( $params, $targeted_attribute = 'sendToAllSubscribers', $targeted_param = 'shouldSendToAllSubscribers' ) ) {
+                $campaign_id = self::createCampaign( $params );
+                $mailgun_params = array_merge( $mailgun_params, [ 'o:campaign' => $campaign_id ] );
+            }
 
-            if ( $response -> http_response_code !== 200 ) {
-                Log::error( "An error occured while sending the mass mails with the subject " . $params -> subject );
+            // Blast off the mass mail
+            $response = $mailgun -> sendMessage( $domain, $mailgun_params );
+            $status = $response -> http_response_code === 200;
+
+            // Run any registered callback function being passed in by the caller
+            $callback( $status );
+
+            // Do logging
+            if ( ! $status ) {
+                parent::notifyError( $subject = $params -> subject, $error_message = json_encode( $response -> http_response_body ) );
                 return FALSE;
             } 
 
+            Log::info( sprintf( "Successfully sent the mass mail with the subject \"%s\"", $params -> subject ) );
             return TRUE;
 
         } else {
+
             Log::warning('No mailing list specified for mass mails with the subject of ' . $params -> subject);
             return FALSE;
+
         }
 	}
 
@@ -84,18 +101,20 @@ class MailgunMailer implements MassMailerInterface
      *
      * @return String The campaign ID
      */
-    private function createCampaign( MassMailerParams $params )
+    private static function createCampaign( MassMailerParams $params )
     {
-        $mail = new MailgunCore( env( 'MAILGUN_SECRET' ) );
-        $campaign_id = md5(time().rand());
+        $mailgun = self::getMailgunMailer();
+
+        $domain = array_last( explode( '@', $params -> mailingList ) );
+        $campaign_id = md5(time().rand());        
         $campaign_name = sprintf( "[%s] %s", date('Y-m-d H:i:s', time()), $params -> subject );
 
-        $response = $mail -> post( env('MAILGUN_DOMAIN') . '/campaigns',[
+        $response = $mailgun -> post( $domain . '/campaigns',[
             'name' => substr( $campaign_name, 0, self::MAXIMUM_CHARACTER_LENGTH ),
             'id'   => $campaign_id,
         ]);
 
-        return $this -> parseResponse( $response, 'campaign' ) ? $campaign_id : FALSE;
+        return self::parseResponse( $response, 'campaign' ) ? $campaign_id : FALSE;
     }
 
     /**
@@ -103,11 +122,16 @@ class MailgunMailer implements MassMailerInterface
      *
      * @return Object The targeted response object
      */
-    private function parseResponse( $response, string $target )
+    private static function parseResponse( $response, string $target )
     {
         if ( $response -> http_response_code == 200 && isset( $response -> http_response_body -> {$target} ) ) {
             return $response -> http_response_body -> {$target};
         }
         return FALSE;
+    }
+
+    private static function getMailgunMailer()
+    {
+        return new Mailgun( env( 'MAILGUN_SECRET' ) );
     }
 }

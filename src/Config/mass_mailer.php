@@ -1,7 +1,36 @@
 <?php
 
     return [
-    
+
+        /*
+        |--------------------------------------------------------------------------
+        | Admin Email Address
+        |--------------------------------------------------------------------------
+        | 
+        | Enter the email address you wished to be notified when there's an error in mass mail delivery        
+        |
+        */
+        'admin_email' => '',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Queue Name (optional)
+        |--------------------------------------------------------------------------
+        | 
+        | You may chose to specify a specific name for your queue, in which the jobs for mail delivery will be sent to.
+        | This is especially useful if you wish to prioritize or segment how jobs are processed,
+        | since Laravel queue worker allows you to specify which queues it should process by priority
+        |
+        | To run your job in your server: 
+        |
+        | If you have no interest in reading the output: 
+        |       sudo nohup php artisan queue:work --daemon --queue=yourQueueName,default > /dev/null 2>&1 &
+        | If you need to refer to the output: 
+        |       sudo nohup php artisan queue:work --daemon --queue=yourQueueName,default > app/storage/logs/laravel.log &
+        |
+        */
+        'queue_name' => '',    
+
         /*
         |--------------------------------------------------------------------------
         | Default Mailing List

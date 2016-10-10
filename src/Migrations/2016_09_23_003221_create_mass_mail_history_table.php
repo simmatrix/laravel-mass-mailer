@@ -20,6 +20,7 @@ class CreateMassMailHistoryTable extends Migration
                 $table->string('mailing_list');
                 $table->json('params');
                 $table->string('archive_link')->nullable();
+                $table->boolean('success');
                 $table->timestamps();
             });
         }

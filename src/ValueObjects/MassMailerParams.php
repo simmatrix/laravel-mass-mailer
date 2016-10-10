@@ -27,6 +27,11 @@ class MassMailerParams extends \Chalcedonyt\ValueObject\ValueObject
     public $viewParameters;
 
     /**
+     * @var String $deliveryStatus
+     */
+    public $deliveryStatus;
+
+    /**
      * @var $attributes
      */
     protected $attributes = [];
@@ -47,6 +52,11 @@ class MassMailerParams extends \Chalcedonyt\ValueObject\ValueObject
     protected $subject;
 
     /**
+     * @var $title
+     */
+    protected $title;  
+
+    /**
      * @var $senderEmail
      */
     protected $senderEmail;
@@ -54,12 +64,7 @@ class MassMailerParams extends \Chalcedonyt\ValueObject\ValueObject
     /**
      * @var $senderName
      */
-    protected $senderName;
-
-    /**
-     * @var $title
-     */
-    protected $title;    
+    protected $senderName;  
 
     /**  
      *  @param   $archiveLink
@@ -73,11 +78,12 @@ class MassMailerParams extends \Chalcedonyt\ValueObject\ValueObject
      *  @param   $mailingList
      *  @param   $senderEmail
      *  @param   $senderName
+     *  @param   $deliveryStatus
      */
     public function __construct( 
         string $archiveLink, array $attributes, string $viewTemplate, array $viewParameters, string $messageContent,        
         array $recipientList, string $subject, string $title, string $mailingList = NULL, string $senderEmail = NULL, 
-        string $senderName = NULL )
+        string $senderName = NULL, bool $deliveryStatus )
     {        
         $this -> archiveLink = $archiveLink;
         $this -> attributes = $attributes;
@@ -90,5 +96,6 @@ class MassMailerParams extends \Chalcedonyt\ValueObject\ValueObject
         $this -> mailingList = $mailingList;
         $this -> senderEmail = $senderEmail;
         $this -> senderName = $senderName;
+        $this -> deliveryStatus = $deliveryStatus;
     }
 }
