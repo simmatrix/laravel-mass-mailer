@@ -73,66 +73,23 @@ php artisan queue:restart
 
 Do go through [Laravel's Documentation on Queues](https://laravel.com/docs/5.3/queues) to understand more on how to do initial setup for your development environment.
 
+## General Flow
+
+1. Get the attributes with `MassMailer::getAttributes()` and construct your frontend application User Interface
+2. When user submit the form from frontend, the backend will receive the `$request` parameter
+3. Feed the `$request` parameter into the function `MassMailer::getParams()`, which would churn out an object of `MassMailerParams` instance, that can be used in subsequent functions.
+4. Feed the `MassMailerParams` object into the function `MassMailer::send()` to blast off the mass mails to your subscribers.
+
 ## Usage
 
-### Sending Mass Emails
-In your controller, you would first need to pass in the `$request` parameter into `MassMailer::getParams()`, this will generate a digestible object that can be used in `MassMailer::send()`.
+### 1(A). Retrieving the Attributes
 
-```
-public function send(Request $request)
-{
-    MassMailer::send( MassMailer::getParams( $request ) );      
-}
-```
-
-### Sending Mass Emails (With custom parameters to overwrite default values)
-
-Currently supports the overwriting of 3 custom parameters, `mailingList`, `mailgunDomain`, and `presenterClassName`
-
-```
-public function send(Request $request)
-{
-	$custom_params = MassMailer::createCustomParams([
-		'mailingList' => 'xxx@xxx.com',
-		'mailgunDomain' => 'xxx@xxx.com',
-		'presenterClassName' => App\MassMailer\Presenters\YourCustomPresenter::class
-	]);
-    MassMailer::send( MassMailer::getParams( $request ), $custom_params );      
-}
-```
-
-### Creating Your Custom Presenters
-
-This class holds all the parameters that you intended to pass them to your blade view template. You can easily generate it using the artisan command as below.
-```
-php artisan make:mass-mailer-presenter YourCustomPresenter
-```
-
-Specify the name of your blade view template, which is good to be placed in your app's `resources/views/vendor/simmatrix/mass-mailer/xxx.blade.php`
-```
-public function getTemplate()
-{
-	return 'vendor.simmatrix.mass-mailer.default';
-}
-```
-
-Start pumping in all of the custom parameters that you wish to pass it to your blade view template!
-```
-private function setParameters( MassMailerParams $params )
-	parent::setViewParameters([
-		'lorem' => 'ipsum',
-		'testing' => 'success'
-	]);
-}
-```
-### Retrieving the Attributes
-
-Here's the sample [JSON result](https://github.com/simmatrix/laravel-mass-mailer/blob/master/src/sample-attribute-endpoint-data.json) returned from calling the following method, which you can used to build up the User Interface of your frontend application.
+Firstly you would need to pull the JSON data to build up your frontend User Interface. Here's the sample [JSON Result](https://github.com/simmatrix/laravel-mass-mailer/blob/master/src/sample-attribute-data.json) returned from calling the following method.
 ```
 return MassMailer::getAttributes();
 ```
 
-### Creating Your Custom Attributes
+### 2(B). Creating Your Custom Attributes
 
 Default attributes that comes with the package are:
   - "Subject" Field
@@ -152,20 +109,74 @@ If you would like to add an additional field in your frontend application, then 
 php artisan make:mass-mailer-attribute YourCustomAttribute
 ```
 
+### 2(A). Sending Mass Emails
+Then when the frontend application pass back the request parameters to the backend, in your controller, you would first need to pass in that `$request` parameter into `MassMailer::getParams()`, which will generate a digestible object called `MassMailerParams` that can be fed into the function `MassMailer::send()`.
 
-### Getting Post-Delivery Report
+```
+public function send(Request $request)
+{
+    MassMailer::send( MassMailer::getParams( $request ) );      
+}
+```
+
+### 2(B). Sending Mass Emails (With custom parameters to overwrite default values)
+
+If you are working on an application that needs to blast mass mails using different Mailgun domains, or to different mailing list, or if you have created your own blade view template and need to use it for the mass mail, you can pass in custom parameters. 
+
+Currently supports the overwriting of 3 custom parameters, `mailingList`, `mailgunDomain`, and `presenterClassName`
+
+```
+public function send(Request $request)
+{
+	$custom_params = MassMailer::createCustomParams([
+		'mailingList' => 'xxx@xxx.com',
+		'mailgunDomain' => 'xxx@xxx.com',
+		'presenterClassName' => App\MassMailer\Presenters\YourCustomPresenter::class
+	]);
+    MassMailer::send( MassMailer::getParams( $request ), $custom_params );      
+}
+```
+
+### 3. Creating Your Custom Presenters
+
+In the previous step it mentioned about passing in your own blade view template to be used for your mass mail design layout. So how would you be doing it? The answer is you would need to create a Presenter class.
+
+This class holds all the parameters that you intended to pass them to your blade view template, and you can also specify the name of the blade view template which you have created. You can easily generate it using the artisan command as below.
+```
+php artisan make:mass-mailer-presenter YourCustomPresenter
+```
+
+3(A). Specify the name of your blade view template. For example if you have placed your newly created template in your app's `resources/views/vendor/simmatrix/mass-mailer/lorem.blade.php`, then in the `getTemplate()` function, you can write the name as:
+```
+public function getTemplate()
+{
+	return 'vendor.simmatrix.mass-mailer.lorem';
+}
+```
+
+3(B). Start pumping in all of the custom parameters that you wish to pass it to your blade view template!
+```
+private function setParameters( MassMailerParams $params )
+	parent::setViewParameters([
+		'lorem' => 'ipsum',
+		'testing' => 'success'
+	]);
+}
+```
+
+### 4. Getting Post-Delivery Report
 Details such as the number of bounces, clicks, complains, deliveries, drops, opens, submits, unsubscribes can be obtained by calling this method.
 ```
 return MassMailer::getReport();
 ```
 
-### Saving Draft
+### 5. Saving Draft
 You may save up the draft by passing the `$request` parameter into the `MassMailer::saveDraft()`.
 ```
 MassMailer::saveDraft( $request );
 ```
 
-### Retrieving Draft
+### 6. Retrieving Draft
 You may retrieve all of the drafts by calling this method.
 ```
 return MassMailer::getDrafts();
@@ -175,7 +186,7 @@ You may retrieve individual draft by passing an ID into the method below.
 return MassMailer::getDraft( $id );
 ```
 
-### Retrieving the Subscribers
+### 7. Retrieving the Subscribers
 You may retrieve all of the subscribers by calling this method.
 ```
 return MassMailer::getSubscribers();
