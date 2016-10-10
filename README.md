@@ -71,6 +71,8 @@ Whenever you make changes to your code or deploy to your server, you would need 
 php artisan queue:restart
 ```
 
+Do go through [Laravel's Documentation on Queues](https://laravel.com/docs/5.3/queues) to understand more on how to do initial setup for your development environment.
+
 ## Usage
 
 ### Sending Mass Emails
