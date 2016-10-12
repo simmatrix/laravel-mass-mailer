@@ -169,6 +169,8 @@ public function getData()
 When the frontend application pass back the request parameters to the backend, in your controller, you would first need to pass in that `$request` parameter into `MassMailer::getParams()`, which will churn out a digestible object called `MassMailerParams` that can be fed into the function `MassMailer::send()`.
 
 ```
+// YourController.php
+
 public function send(Request $request)
 {
     MassMailer::send( MassMailer::getParams( $request ) );      
@@ -185,6 +187,7 @@ Currently this supports the overwriting of 3 custom mailer options, namely
 * `presenter`: If you create a new blade layout for your mass mail, then you would need to specify the name over here. By default it will use the presenter `Simmatrix\MassMailer\Presenters\DefaultMassMailerPresenter`, which uses the blade template in `resources/views/vendor/simatrix/mass-mailer/default.blade.php`.
 
 ```
+// YourController.php
 public function send(Request $request)
 {
   $mailer_options = MassMailer::createMailerOptions([
