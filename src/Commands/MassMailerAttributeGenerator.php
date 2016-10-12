@@ -66,27 +66,35 @@ class MassMailerAttributeGenerator extends Command
 
             if ( $proceed ) {
 
-                // Generate the file and put it into the intended directory
-                if ( $this->confirm('Are you sure to create this Mass Mailer Attribute?') ) {
-                                    
-                    is_dir( $directory ) ?: $this -> file -> makeDirectory( $directory, 0755, TRUE );
+                $has_value = FALSE;
 
-                    $view = $this -> view -> make( 'mass_mailer::Generators.attribute', [
-                        'namespace'   =>  $namespace,
-                        'class_name'  =>  $class_name,
-                    ]);
-                    $this -> file -> put( $new_file_path, $view -> render() );
+                if ( $this -> confirm( "Do you want to give a default value for this attribute?" ) ) {
 
-                    $this -> info( "Your Mass Mailer Attribute {$class_name} has been generated successfully" );
+                    $default_value = $this -> ask( "Write down your default value", '' );
+                    $is_boolean = in_array( strtolower( $default_value ), ['true', 'false'] );
+                    $is_integer = filter_var( $default_value, FILTER_VALIDATE_INT ) !== FALSE;
+                    $has_value = TRUE;
 
-                }
+                } 
+
+                is_dir( $directory ) ?: $this -> file -> makeDirectory( $directory, 0755, TRUE );
+
+                $view = $this -> view -> make( 'mass_mailer::Generators.attribute', [
+                    'namespace'      =>  $namespace,
+                    'class_name'     =>  $class_name,
+                    'has_value'      =>  $has_value,
+                    'default_value'  =>  $default_value,
+                    'is_boolean'     =>  $is_boolean,
+                    'is_integer'     =>  $is_integer,
+                ]);
+                $this -> file -> put( $new_file_path, $view -> render() );
+
+                $this -> info( "Your Mass Mailer Attribute {$class_name} has been generated successfully" );
             
-            } else {
-                $this -> info('Your action has been cancelled. No attributes created.');
             }
 
         } catch ( \Exception $e ) {
-            $this -> error('Failed to create a attribute for your mass mailer');
+            $this -> error('Failed to create a attribute for your mass mailer ' . $e -> getMessage());
         }
     }
 }

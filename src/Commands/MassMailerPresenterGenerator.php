@@ -68,22 +68,17 @@ class MassMailerPresenterGenerator extends Command
 
                 // Get the view template name
                 $template_name = $this -> ask('Please key in the name of your custom blade view template file');
-                
-                // Generate the file and put it into the intended directory
-                if ( $this->confirm('Are you sure to create this Mass Mailer Presenter?') ) {
                                     
-                    is_dir( $directory ) ?: $this -> file -> makeDirectory( $directory, 0755, TRUE );
+                is_dir( $directory ) ?: $this -> file -> makeDirectory( $directory, 0755, TRUE );
 
-                    $view = $this -> view -> make( 'mass_mailer::Generators.presenter', [
-                        'namespace'     =>  $namespace,
-                        'class_name'    =>  $class_name,
-                        'template_name' =>  $template_name,
-                    ]);
-                    $this -> file -> put( $new_file_path, $view -> render() );
+                $view = $this -> view -> make( 'mass_mailer::Generators.presenter', [
+                    'namespace'     =>  $namespace,
+                    'class_name'    =>  $class_name,
+                    'template_name' =>  $template_name,
+                ]);
+                $this -> file -> put( $new_file_path, $view -> render() );
 
-                    $this -> info( "Your Mass Mailer Presenter {$class_name} has been generated successfully" );
-
-                }
+                $this -> info( "Your Mass Mailer Presenter {$class_name} has been generated successfully" );
             
             } else {
                 $this -> info('Your action has been cancelled. No presenter created.');
