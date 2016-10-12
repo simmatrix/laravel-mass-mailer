@@ -1,188 +1,113 @@
 {
   "params": [
     {
-      "applyTemplate": {
-        "className": "Simmatrix\\MassMailer\\Attributes\\ApplyTemplate",
+      "ApplyTemplate": {
         "label": "Apply Template",
-        "name": "applyTemplate",
-        "params": {
-          "shouldApplyTemplate": true
-        }
+        "name": "ApplyTemplate",
+        "params": false,
+        "value": false
       }
     },
     {
-      "messageContent": {
-        "className": "Simmatrix\\MassMailer\\Attributes\\MessageContent",
+      "MessageContent": {
         "label": "Message",
-        "name": "messageContent",
-        "params": {
-          "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce malesuada magna quis dapibus tempor. Phasellus sed augue ante. Aenean auctor ex orci, non gravida metus porta facilisis. Suspendisse scelerisque ex vel justo accumsan placerat. Nullam eget erat placerat enim lobortis tempus eget ut libero. Praesent semper purus id aliquet porttitor. Etiam vehicula molestie accumsan. Maecenas ac tempor nibh, et dapibus dolor. Nunc a pellentesque orci. Ut auctor, urna vel interdum cursus, magna nisl pharetra mi, fermentum volutpat enim diam nec libero."
-        }
+        "name": "MessageContent",
+        "params": false,
+        "value": ""
       }
     },
     {
-      "recipientList": {
-        "className": "Simmatrix\\MassMailer\\Attributes\\RecipientList",
+      "RecipientList": {
         "label": "To",
-        "name": "recipientList",
-        "params": {
-          "data": [
-            "simmatrix100@gmail.com"
-          ]
-        }
+        "name": "RecipientList",
+        "params": false,
+        "value": ""
       }
     },
     {
-      "sendToAllSubscribers": {
-        "className": "Simmatrix\\MassMailer\\Attributes\\SendToAllSubscribers",
+      "SendToAllSubscribers": {
         "label": "Send To All Subscribers",
-        "name": "sendToAllSubscribers",
-        "params": {
-          "shouldSendToAllSubscribers": false
-        }
+        "name": "SendToAllSubscribers",
+        "params": false,
+        "value": false
       }
     },
     {
-      "senderEmail": {
-        "className": "Simmatrix\\MassMailer\\Attributes\\SenderEmail",
+      "SenderEmail": {
         "label": "Sender Email",
-        "name": "senderEmail",
-        "params": {
-          "data": "hello@example.com"
-        }
+        "name": "SenderEmail",
+        "params": false,
+        "value": "hello@example.com"
       }
     },
     {
-      "senderName": {
-        "className": "Simmatrix\\MassMailer\\Attributes\\SenderName",
+      "SenderName": {
         "label": "Sender Name",
-        "name": "senderName",
-        "params": {
-          "data": "Example"
-        }
+        "name": "SenderName",
+        "params": false,
+        "value": "Example"
       }
     },
     {
-      "subject": {
-        "className": "Simmatrix\\MassMailer\\Attributes\\Subject",
+      "Subject": {
         "label": "Subject",
-        "name": "subject",
-        "params": {
-          "data": "Awesome Day Begins With Awesome Thoughts"
-        }
+        "name": "Subject",
+        "params": false,
+        "value": ""
       }
     },
     {
-      "title": {
-        "className": "Simmatrix\\MassMailer\\Attributes\\Title",
+      "Title": {
         "label": "Title",
-        "name": "title",
-        "params": {
-          "data": "Awesome Day Begins With Awesome Thoughts"
-        }
+        "name": "Title",
+        "params": false,
+        "value": ""
       }
     },
     {
-      "featuredBlogger": {
-        "className": "App\\MassMailer\\Attributes\\FeaturedBlogger",
-        "label": "Featured Blogger",
-        "name": "featuredBlogger",
-        "params": {
-          "title": null,
-          "permalink": null,
-          "slug": null,
-          "featuredAvatar": null,
-          "featuredDate": null,
-          "featuredExcerpt": null,
-          "featuredImg": null,
-          "featuredUrl": null
-        }
-      }
-    },
-    {
-      "featuredImage": {
-        "className": "App\\MassMailer\\Attributes\\FeaturedImage",
-        "label": "Featured Image",
-        "name": "featuredImage",
-        "params": {
-          "data": null
-        }
-      }
-    },
-    {
-      "includeFeaturedBlogger": {
-        "className": "App\\MassMailer\\Attributes\\IncludeFeaturedBlogger",
+      "FeaturedBlogger": {
         "label": "Include Featured Blogger",
-        "name": "includeFeaturedBlogger",
-        "params": {
-          "data": false
-        }
+        "name": "FeaturedBlogger",
+        "params": false,
+        "value": false
       }
     },
     {
-      "includeFeaturedImage": {
-        "className": "App\\MassMailer\\Attributes\\IncludeFeaturedImage",
-        "label": "Include Featured Image",
-        "name": "includeFeaturedImage",
-        "params": {
-          "data": false
-        }
+      "FeaturedImage": {
+        "label": "Featured Image",
+        "name": "FeaturedImage",
+        "params": false,
+        "value": ""
       }
     },
     {
-      "includeInstagram": {
-        "className": "App\\MassMailer\\Attributes\\IncludeInstagram",
+      "Instagram": {
         "label": "Include Instagram Feeds",
-        "name": "includeInstagram",
-        "params": {
-          "data": false
-        }
+        "name": "Instagram",
+        "params": false,
+        "value": false
       }
     },
     {
-      "includeRecentPost": {
-        "className": "App\\MassMailer\\Attributes\\IncludeRecentPost",
-        "label": "Include Recent Post",
-        "name": "includeRecentPost",
-        "params": {
-          "data": false
-        }
-      }
-    },
-    {
-      "instagram": {
-        "className": "App\\MassMailer\\Attributes\\Instagram",
-        "label": "Instagram Feeds",
-        "name": "instagram",
-        "params": {
-          "data": null
-        }
-      }
-    },
-    {
-      "mailType": {
-        "className": "App\\MassMailer\\Attributes\\FeaturedImage",
+      "MailType": {
         "label": "Mail Type",
-        "name": "mailType",
-        "params": {
-          "data": [
-            "Newsletter",
-            "Announcement",
-            "Sponsored Post",
-            "Product Review",
-            "Invitation"
-          ]
-        }
+        "name": "MailType",
+        "params": [
+          "Newsletter",
+          "Announcement",
+          "Sponsored Post",
+          "Product Review",
+          "Invitation"
+        ],
+        "value": ""
       }
     },
     {
-      "recentPost": {
-        "className": "App\\MassMailer\\Attributes\\RecentPost",
-        "label": "Recent Posts",
-        "name": "recentPost",
-        "params": {
-          "data": null
-        }
+      "RecentPost": {
+        "label": "Include Recent Posts",
+        "name": "RecentPost",
+        "params": false,
+        "value": false
       }
     }
   ]

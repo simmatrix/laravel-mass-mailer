@@ -3,7 +3,7 @@
 namespace Simmatrix\MassMailer\Interfaces;
 
 use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
-use Simmatrix\MassMailer\ValueObjects\MassMailerCustomParams;
+use Simmatrix\MassMailer\ValueObjects\MassMailerOptions;
 
 interface MassMailerMailingListInterface 
 {
@@ -26,7 +26,7 @@ interface MassMailerMailingListInterface
 
 	public static function delete( string $mailing_list_address );
 
-	public static function get( MassMailerParams $params, MassMailerCustomParams $custom_params );
+	public static function get( MassMailerParams $params, MassMailerOptions $mailer_options );
 	
 	public static function getSubscribers( string $mailing_list_address, int $limit, bool $subscribed );
 

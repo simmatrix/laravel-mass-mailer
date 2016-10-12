@@ -4,7 +4,7 @@ namespace Simmatrix\MassMailer;
 
 use Simmatrix\MassMailer\Factories\MassMailerFactory;
 use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
-use Simmatrix\MassMailer\ValueObjects\MassMailerCustomParams;
+use Simmatrix\MassMailer\ValueObjects\MassMailerOptions;
 use Simmatrix\MassMailer\Interfaces\MassMailerMailingListInterface;
 
 class MassMailerMailingList implements MassMailerMailingListInterface
@@ -29,10 +29,10 @@ class MassMailerMailingList implements MassMailerMailingListInterface
 		$manager::delete( $mailing_list_address );
 	}
 
-	public static function get( MassMailerParams $params, MassMailerCustomParams $custom_params )
+	public static function get( MassMailerParams $params, MassMailerOptions $mailer_options )
 	{
 		$manager = self::getManager();
-		return $manager::get( $params, $custom_params );
+		return $manager::get( $params, $mailer_options );
 	}	
 
 	public static function getSubscribers( string $mailing_list_address = NULL, int $limit, bool $subscribed )

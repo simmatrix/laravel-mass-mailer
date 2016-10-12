@@ -7,95 +7,50 @@ use Simmatrix\MassMailer\Interfaces\MassMailerPresenterInterface;
 class MassMailerParams extends \Chalcedonyt\ValueObject\ValueObject
 {
     /**
-     * @var $archiveLink
+     * @var $archiveLink 
      */
     public $archiveLink;
 
     /**
-     * @var $mailingList
+     * @var $mailingList 
      */
     public $mailingList;
 
     /**
-     * @var String $viewTemplate
+     * @var String $viewTemplate 
      */
     public $viewTemplate;
 
     /**
-     * @var Array $viewParameters
+     * @var Array $viewParameters 
      */
     public $viewParameters;
 
     /**
-     * @var String $deliveryStatus
+     * @var String $deliveryStatus 
      */
     public $deliveryStatus;
 
     /**
      * @var $attributes
      */
-    protected $attributes = [];
-
-    /**
-     * @var $messageContent
-     */
-    protected $messageContent;
-
-    /**
-     * @var $recipientList
-     */
-    protected $recipientList = [];
-
-    /**
-     * @var $subject
-     */
-    protected $subject;
-
-    /**
-     * @var $title
-     */
-    protected $title;  
-
-    /**
-     * @var $senderEmail
-     */
-    protected $senderEmail;
-
-    /**
-     * @var $senderName
-     */
-    protected $senderName;  
+    protected $attributes = []; 
 
     /**  
-     *  @param   $archiveLink
-     *  @param   $attributes
-     *  @param   $messageContent
-     *  @param   $viewTemplate
-     *  @param   $viewParameters
-     *  @param   $recipientList
-     *  @param   $subject
-     *  @param   $title
-     *  @param   $mailingList
-     *  @param   $senderEmail
-     *  @param   $senderName
-     *  @param   $deliveryStatus
+     *  @param  String   $archiveLink     This is the URL link to view the content of the mass mails in your browser. It is like those "View on Browser" link that you saw in e-newsletters that you received
+     *  @param  String   $mailingList     This is the name of the mailing list address / alias address ( One single address that represents multiple recipients' emails )
+     *  @param  String   $viewTemplate    This is the name of your blade view template (The design layout for your mass mail)
+     *  @param  Array    $viewParameters  This is all of the parameters/values that you wish to pass and use it in your blade view template
+     *  @param  Boolean  $deliveryStatus  This will be popoulated by the Job that is being tasked to send out the mass mails
+     *  @param  Array    $attributes      This is a list of request parameters passed in by the user from the frontend application
      */
-    public function __construct( 
-        string $archiveLink, array $attributes, string $viewTemplate, array $viewParameters, string $messageContent,        
-        array $recipientList, string $subject, string $title, string $mailingList = NULL, string $senderEmail = NULL, 
-        string $senderName = NULL, bool $deliveryStatus )
+    public function __construct( string $archiveLink = NULL, string $mailingList = NULL, string $viewTemplate = NULL, array $viewParameters = [], bool $deliveryStatus = FALSE, array $attributes = [] )
     {        
         $this -> archiveLink = $archiveLink;
-        $this -> attributes = $attributes;
+        $this -> mailingList = $mailingList;
         $this -> viewTemplate = $viewTemplate;
         $this -> viewParameters = $viewParameters;
-        $this -> messageContent = $messageContent;
-        $this -> recipientList = $recipientList;
-        $this -> subject = $subject;
-        $this -> title = $title;
-        $this -> mailingList = $mailingList;
-        $this -> senderEmail = $senderEmail;
-        $this -> senderName = $senderName;
         $this -> deliveryStatus = $deliveryStatus;
+        $this -> attributes = $attributes;
     }
 }

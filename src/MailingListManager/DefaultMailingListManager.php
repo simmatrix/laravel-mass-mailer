@@ -4,7 +4,7 @@ namespace Simmatrix\MassMailer\MailingListManager;
 
 use Simmatrix\MassMailer\Interfaces\MassMailerMailingListInterface;
 use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
-use Simmatrix\MassMailer\ValueObjects\MassMailerCustomParams;
+use Simmatrix\MassMailer\ValueObjects\MassMailerOptions;
 use Simmatrix\MassMailer\MassMailerAttribute;
 
 class DefaultMailingListManager implements MassMailerMailingListInterface
@@ -38,10 +38,11 @@ class DefaultMailingListManager implements MassMailerMailingListInterface
      * To decide upon the appropriate mailing list
      *
      * @param Object $params An instance of Simmatrix\MassMailer\ValueObjects\MassMailerParams
+     * @param Object $mailer_options An instance of Simmatrix\MassMailer\ValueObjects\MassMailerOptions
      *
      * @return String The mailing list address
      */
-    public static function get( MassMailerParams $params, MassMailerCustomParams $custom_params )
+    public static function get( MassMailerParams $params, MassMailerOptions $mailer_options )
     {
         return FALSE; // There's no mailing list for default mail driver       
     }

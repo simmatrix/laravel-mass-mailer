@@ -65,19 +65,12 @@ class MassMailerFactory
      * To create the attribute class instance
      * 
      * @param String $class_name
-     * @param Array $key_values
      *
      * @return Object The intended instance to be created
      */
-    public static function createAttribute( string $class_name, array $key_values = [] )
+    public static function createAttribute( string $class_name )
     {
-        $instance = self::create( $class_name );
-
-        foreach( $key_values as $key => $value ) {
-            $instance -> $key = $value;
-        }
-
-        return $instance;
+        return self::create( $class_name );
     }
 
     /**

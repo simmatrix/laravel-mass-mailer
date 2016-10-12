@@ -38,7 +38,8 @@ class {{ $class_name }} extends MassMailerPresenterAbstract implements MassMaile
     {
         parent::setViewParameters([     
             // 'xxx' => 'yyy',
-            // 'yourAttributeName' => MassMailerAttribute::extract( $params, $yourAttributeName, $yourTargetedAttributeParam ),
+            // 'zzz' => MassMailerAttribute::extract( $params, 'YourAttributeName' ),
+            // 'instagram_posts' => MassMailerAttribute::extract( $params, 'Instagram' ),
         ]);
     }
 }

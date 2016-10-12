@@ -4,7 +4,7 @@ namespace Simmatrix\MassMailer;
 
 use Illuminate\Http\Request;
 use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
-use Simmatrix\MassMailer\ValueObjects\MassMailerCustomParams;
+use Simmatrix\MassMailer\ValueObjects\MassMailerOptions;
 use Simmatrix\MassMailer\MassMailerSender;
 use Simmatrix\MassMailer\MassMailerAttribute;
 use Simmatrix\MassMailer\MassMailerParameter;
@@ -35,26 +35,26 @@ class MassMailerProxy
      * To build the appropriate parameter object that is digestible by the subsequent MassMailer::send() function
      *
      * @params Request $request The request parameters
-     * @params MassMailerCustomParams $custom_params Custom parameters provided by the caller to overwrite existing values
+     * @params MassMailerOptions $mailer_options Custom values provided by the caller to overwrite existing config() values
      *
      * @return Object An instance of Simmatrix\MassMailer\ValueObjects\MassMailerParams
      */
-    public static function getParams( Request $request, MassMailerCustomParams $custom_params = NULL )
+    public static function getParams( Request $request, MassMailerOptions $mailer_options = NULL )
     {
-        $custom_params = $custom_params ?? self::createCustomParams([]);
-        return MassMailerParameter::create( $request, $custom_params );
+        $mailer_options = $mailer_options ?? self::createMailerOptions([]);
+        return MassMailerParameter::create( $request, $mailer_options );
     }
 
     /**
-     * To create an object containing a list of parameters that are allowed to be overwritten by caller's custom input
+     * To create an object to hold the values for overwriting the existing config() values
      * 
-     * @param Array $params Custom parameters supplied by the caller
+     * @param Array $mailer_options Custom values supplied by the caller to overwrite existing config values
      *
-     * @return Object An instance of Simmatrix\MassMailer\ValueObjects\MassMailerCustomParams
+     * @return Object An instance of Simmatrix\MassMailer\ValueObjects\MassMailerOptions
      */
-    public static function createCustomParams( array $params = [] )
+    public static function createMailerOptions( array $mailer_options = [] )
     {
-        return MassMailerCustomParams::create( $params );
+        return MassMailerOptions::create( $mailer_options );
     }
 
     /**

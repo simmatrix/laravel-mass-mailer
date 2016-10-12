@@ -5,11 +5,6 @@ namespace Simmatrix\MassMailer\ValueObjects;
 class MassMailerAttributeParams extends \Chalcedonyt\ValueObject\ValueObject
 {
     /**
-     * @var $className
-     */
-    protected $className;
-
-    /**
      * @var $label
      */
     protected $label;
@@ -17,25 +12,37 @@ class MassMailerAttributeParams extends \Chalcedonyt\ValueObject\ValueObject
     /**
      * @var $name
      */
-    protected $name;
+    public $name;
 
     /**
      * @var $params
      */
-    protected $params = [];
+    protected $params = FALSE;
 
     /**
-     *
-     *  @param   $className
+     * @var $value
+     */
+    public $value;
+
+    /**
+     * @var $data
+     */
+    public $data = FALSE;
+
+    /**
      *  @param   $label
      *  @param   $name
      *  @param   $params
+     *  @param   $value
+     *  @param   $data
      */
-    public function __construct( string $className, string $label = NULL, string $name, array $params = [] )
+    public function __construct( string $label, string $name, $params, $value, $data )
     {        
-        $this -> className = $className;
+        
         $this -> label = $label;
         $this -> name = $name;
         $this -> params = $params;
+        $this -> value = $value;
+        $this -> data = $data;
     }
 }

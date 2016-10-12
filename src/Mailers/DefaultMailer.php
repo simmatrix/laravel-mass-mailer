@@ -5,6 +5,7 @@ namespace Simmatrix\MassMailer\Mailers;
 use Simmatrix\MassMailer\Interfaces\MassMailerInterface;
 use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
 use Simmatrix\MassMailer\Mailers\MassMailerAbstract;
+use Simmatrix\MassMailer\MassMailerAttribute;
 use Mail;
 use Log;
 
@@ -20,13 +21,22 @@ class DefaultMailer extends MassMailerAbstract implements MassMailerInterface
 	public static function send( MassMailerParams $params, $callback )
 	{
 		Mail::send( $params -> viewTemplate, $params -> viewParameters, function( $message ) use( $params, $callback ){
-            $message -> bcc( $params -> recipientList ) -> subject( $params -> subject );
-            $message -> from( $params -> senderEmail, $params -> senderName );
-            $message -> replyTo( config('mail.from.address'), config('mail.from.name') );            
+
+            $subject = MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' );
+            $recipientList = MassMailerAttribute::extract( $params, $targeted_attribute = 'RecipientList' );
+            $senderEmail = MassMailerAttribute::extract( $params, $targeted_attribute = 'SenderEmail' );
+            $senderName = MassMailerAttribute::extract( $params, $targeted_attribute = 'SenderName' );
+
+            $message -> bcc( $recipientList ) 
+                     -> subject( $subject )
+                     -> from( $senderEmail, $senderName )
+                     -> replyTo( config('mail.from.address'), config('mail.from.name') );            
         });        
 
         $status = FALSE;
 
+        $subject = MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' );
+        
         if( count( Mail::failures() ) > 0 ) {
 
             Log::error( "One or more errors occured during the email delivery." );
@@ -36,11 +46,12 @@ class DefaultMailer extends MassMailerAbstract implements MassMailerInterface
                 $failed_emails[] = $email_address;
             }
 
-            $error_message = 'Emails affected: ' . json_encode($failed_emails);
-            parent::notifyError( $params -> subject, $error_message );
+            $error_message = 'Emails affected: ' . json_encode($failed_emails);            
+            parent::notifyError( $subject, $error_message );
 
         } else {
 
+            Log::info( sprintf( "Successfully sent the mass mail with the subject \"%s\"", $subject ) );
             $status = TRUE;
 
         }

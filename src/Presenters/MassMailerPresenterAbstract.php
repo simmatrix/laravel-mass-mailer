@@ -4,6 +4,7 @@ namespace Simmatrix\MassMailer\Presenters;
 
 use Simmatrix\MassMailer\Interfaces\MassMailerPresenterInterface;
 use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
+use Simmatrix\MassMailer\MassMailerAttribute;
 
 abstract class MassMailerPresenterAbstract implements MassMailerPresenterInterface
 {
@@ -60,12 +61,12 @@ abstract class MassMailerPresenterAbstract implements MassMailerPresenterInterfa
 	public function getDefaultViewParameters()
 	{
 		return [
-			'subject' 		=> 	$this -> mailerParameters -> subject,
-			'title' 		=> 	$this -> mailerParameters -> title,
-			'messageContent'=> 	$this -> mailerParameters -> messageContent,
-			'archiveLink' 	=> 	$this -> mailerParameters -> archiveLink,
-			'senderEmail' 	=> 	$this -> mailerParameters -> senderEmail,
-			'senderName' 	=> 	$this -> mailerParameters -> senderName,
+			'subject' 		=>  MassMailerAttribute::extract( $this -> mailerParameters, $targeted_attribute = 'Subject' ),
+			'title' 		=> 	MassMailerAttribute::extract( $this -> mailerParameters, $targeted_attribute = 'Title' ),
+			'messageContent'=> 	MassMailerAttribute::extract( $this -> mailerParameters, $targeted_attribute = 'MessageContent' ),
+			'senderEmail' 	=> 	MassMailerAttribute::extract( $this -> mailerParameters, $targeted_attribute = 'SenderEmail' ),
+			'senderName' 	=> 	MassMailerAttribute::extract( $this -> mailerParameters, $targeted_attribute = 'SenderName' ),
+			'archiveLink' 	=> 	$this -> mailerParameters -> archiveLink,			
 			'is_archive'    =>  self::IS_NOT_ARCHIVE
 		];
 	}

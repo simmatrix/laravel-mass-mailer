@@ -57,8 +57,7 @@ class MassMailerAttributeGenerator extends Command
             $class_name = preg_replace('/[^A-Za-z]/', '', trim($this -> argument('classname')));
             $namespace = config('mass_mailer.app_namespace') . 'Attributes'; 
             $directory = app_path( config('mass_mailer.attribute_path') );
-            $new_file_path = sprintf("%s/%s.php", $directory, $class_name);               
-            $parameters = [];
+            $new_file_path = sprintf("%s/%s.php", $directory, $class_name);
             $proceed = TRUE;
 
             if ( file_exists( $new_file_path ) ) {
@@ -67,20 +66,6 @@ class MassMailerAttributeGenerator extends Command
 
             if ( $proceed ) {
 
-                // To create class properties
-                do {
-
-                    $requirement = empty( $parameters ) ? '$data will be created by default if leave empty' : 'leave empty to skip';
-                    $parameter = $this -> ask('Please key in a name for your parameter [' . $requirement . '] (must be entirely alphabetic characters)', FALSE);
-
-                    if ( $parameter ) {
-                        $parameters[] = preg_replace('/[^A-Za-z]/', '', trim($parameter));
-                    } else if ( ! $parameter && empty( $parameters ) ) {
-                        $parameters[] = 'data';
-                    }
-
-                } while ( $parameter || empty( $parameters ) );
-            
                 // Generate the file and put it into the intended directory
                 if ( $this->confirm('Are you sure to create this Mass Mailer Attribute?') ) {
                                     
@@ -89,8 +74,6 @@ class MassMailerAttributeGenerator extends Command
                     $view = $this -> view -> make( 'mass_mailer::Generators.attribute', [
                         'namespace'   =>  $namespace,
                         'class_name'  =>  $class_name,
-                        'parameters'  =>  $parameters,
-                        'name'        =>  camel_case( $class_name )
                     ]);
                     $this -> file -> put( $new_file_path, $view -> render() );
 

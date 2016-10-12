@@ -4,7 +4,7 @@ namespace Simmatrix\MassMailer\MailingListManager;
 
 use Simmatrix\MassMailer\Interfaces\MassMailerMailingListInterface;
 use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
-use Simmatrix\MassMailer\ValueObjects\MassMailerCustomParams;
+use Simmatrix\MassMailer\ValueObjects\MassMailerOptions;
 use Simmatrix\MassMailer\MassMailerAttribute;
 use Mailgun\Mailgun;
 use Log;
@@ -51,15 +51,18 @@ class MailgunMailingListManager implements MassMailerMailingListInterface
      *
      * @return String The mailing list address
      */
-    public static function get( MassMailerParams $params, MassMailerCustomParams $custom_params )
+    public static function get( MassMailerParams $params, MassMailerOptions $mailer_options )
     {
-        if ( count( $params -> recipientList ) > 0 || MassMailerAttribute::extract( $params, $targeted_attribute = 'sendToAllSubscribers', $targeted_param = 'shouldSendToAllSubscribers' ) ) {
+        $shouldSendToAllSubscribers = MassMailerAttribute::extract( $params, $targeted_attribute = 'SendToAllSubscribers' );
+        $recipientList = MassMailerAttribute::extract( $params, $targeted_attribute = 'RecipientList' );
+
+        if ( count( $recipientList ) > 0 || $shouldSendToAllSubscribers ) {
 
             // -- if it is being set to send to all of the subscribers, then use the default mailing list
-            if ( MassMailerAttribute::extract( $params, $targeted_attribute = 'sendToAllSubscribers', $targeted_param = 'shouldSendToAllSubscribers' ) ) {
+            if ( $shouldSendToAllSubscribers ) {
                 
-                $mailing_list = $custom_params -> mailingList ?? config('mass_mailer.mailing_list');
-                $mailgun_domain = $custom_params -> mailgunDomain ?? env('MAILGUN_DOMAIN');
+                $mailing_list = $mailer_options -> mailingList ?? config('mass_mailer.mailing_list');
+                $mailgun_domain = $mailer_options -> mailgunDomain ?? env('MAILGUN_DOMAIN');
                 
                 return sprintf("%s@%s", $mailing_list, $mailgun_domain);
 
@@ -67,24 +70,24 @@ class MailgunMailingListManager implements MassMailerMailingListInterface
             } else {
 
                 // Get the Mailgun domain 
-                $mailgun_domain = $custom_params -> mailgunDomain ?? env('MAILGUN_DOMAIN');
+                $mailgun_domain = $mailer_options -> mailgunDomain ?? env('MAILGUN_DOMAIN');
 
                 // create a a custom mailing list
                 $mailing_list_address = sprintf("%s%s@%s", 'custom.mailing.list.', date('YmdHis', time()), $mailgun_domain);
                 $mailing_list_name = 'Custom Mailing List created at ' . date('Y-m-d H:i:s', time());
                 self::create( $mailing_list_address, $mailing_list_name );
 
-                // subscribe the emails into the custom mailing list
-                if ( count( $params -> recipientList ) <= 1000 ) {
+                // subscribe the emails into the custom mailing list                
+                if ( count( $recipientList ) <= 1000 ) {
 
                     // == if less than 1000 people, can directly add it into the mailing list
-                    self::addSubscribers( $params -> recipientList, $mailing_list_address );
+                    self::addSubscribers( $recipientList, $mailing_list_address );
 
-                } else if ( count( $params -> recipientList ) <= 10000 ) {
+                } else if ( count( $recipientList ) <= 10000 ) {
 
                     // == if more than 1000 people, Mailgun requires us to split it up to 1000 per call
-                    for( $i = 0; $i < count( $params -> recipientList ); $i += 1000 ) {
-                        $sliced = array_slice( $params -> recipientList, $i, 1000 );
+                    for( $i = 0; $i < count( $recipientList ); $i += 1000 ) {
+                        $sliced = array_slice( $recipientList, $i, 1000 );
                         self::addSubscribers( $sliced, $mailing_list_address );
                     }
 

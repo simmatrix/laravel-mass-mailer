@@ -3,6 +3,7 @@
 namespace Simmatrix\MassMailer;
 
 use Log;
+use Simmatrix\MassMailer\MassMailerAttribute;
 use Simmatrix\MassMailer\Models\MassMailHistory;
 use Simmatrix\MassMailer\Factories\MassMailerFactory;
 use Simmatrix\MassMailer\ValueObjects\MassMailerParams;
@@ -25,7 +26,7 @@ class MassMailerHistory
 	public static function save( MassMailerParams $params )
 	{
 		MassMailHistory::firstOrCreate([
-			'subject' => $params -> subject,
+			'subject' => MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' ),
 			'mailing_list' => $params -> mailingList,
 			'params' => $params,
 			'archive_link' => $params -> archiveLink,

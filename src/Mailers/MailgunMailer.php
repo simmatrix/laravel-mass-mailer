@@ -55,11 +55,14 @@ class MailgunMailer extends MassMailerAbstract implements MassMailerInterface
             
             $mailgun = self::getMailgunMailer();
             $domain = array_last( explode( '@', $params -> mailingList ) );
+            $subject = MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' );
+            $senderEmail = MassMailerAttribute::extract( $params, $targeted_attribute = 'SenderEmail' );
+            $sendToAllSubscribers = MassMailerAttribute::extract( $params, $targeted_attribute = 'SendToAllSubscribers' );
 
             $mailgun_params = [
-                'from' => $params -> senderEmail,
+                'from' => $senderEmail,
                 'to' => $params -> mailingList,
-                'subject' => $params -> subject,
+                'subject' => $subject,
                 'html' => parent::getMessageContent( $params ),
                 'o:tracking' => self::SHOULD_TRACK,
                 'o:tracking-clicks' => self::SHOULD_TRACK_CLICKS,
@@ -67,7 +70,7 @@ class MailgunMailer extends MassMailerAbstract implements MassMailerInterface
             ];
 
             // Tie to a specific Mailgun campaign if it is being set to send to all of the subscribers
-            if ( MassMailerAttribute::extract( $params, $targeted_attribute = 'sendToAllSubscribers', $targeted_param = 'shouldSendToAllSubscribers' ) ) {
+            if ( $sendToAllSubscribers ) {
                 $campaign_id = self::createCampaign( $params );
                 $mailgun_params = array_merge( $mailgun_params, [ 'o:campaign' => $campaign_id ] );
             }
@@ -81,16 +84,16 @@ class MailgunMailer extends MassMailerAbstract implements MassMailerInterface
 
             // Do logging
             if ( ! $status ) {
-                parent::notifyError( $subject = $params -> subject, $error_message = json_encode( $response -> http_response_body ) );
+                parent::notifyError( $subject, $error_message = json_encode( $response -> http_response_body ) );
                 return FALSE;
             } 
 
-            Log::info( sprintf( "Successfully sent the mass mail with the subject \"%s\"", $params -> subject ) );
+            Log::info( sprintf( "Successfully sent the mass mail with the subject \"%s\"", $subject ) );
             return TRUE;
 
         } else {
 
-            Log::warning('No mailing list specified for mass mails with the subject of ' . $params -> subject);
+            Log::warning('No mailing list specified for mass mails with the subject of ' . $subject);
             return FALSE;
 
         }
@@ -106,8 +109,9 @@ class MailgunMailer extends MassMailerAbstract implements MassMailerInterface
         $mailgun = self::getMailgunMailer();
 
         $domain = array_last( explode( '@', $params -> mailingList ) );
-        $campaign_id = md5(time().rand());        
-        $campaign_name = sprintf( "[%s] %s", date('Y-m-d H:i:s', time()), $params -> subject );
+        $campaign_id = md5(time().rand());
+        $subject = MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' );  
+        $campaign_name = sprintf( "[%s] %s", date('Y-m-d H:i:s', time()), $subject );
 
         $response = $mailgun -> post( $domain . '/campaigns',[
             'name' => substr( $campaign_name, 0, self::MAXIMUM_CHARACTER_LENGTH ),
