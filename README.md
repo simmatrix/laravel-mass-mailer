@@ -188,6 +188,7 @@ Currently this supports the overwriting of 3 custom mailer options, namely
 
 ```
 // YourController.php
+
 public function send(Request $request)
 {
   $mailer_options = MassMailer::createMailerOptions([
@@ -257,6 +258,10 @@ You may retrieve all of the subscribers by calling this method.
 ```
 return MassMailer::getSubscribers();
 ```
+
+Acknowledgements
+----
+Thanks [Chalcedonyt](https://github.com/chalcedonyt) for the feedback given and for the useful [Value Object](https://github.com/chalcedonyt/laravel-valueobject) Laravel package
 
 License
 ----
