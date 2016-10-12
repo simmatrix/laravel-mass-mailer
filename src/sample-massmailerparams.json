@@ -1,0 +1,33 @@
+{
+  "attributes": {
+    "Title": "Awesome New Day Begins With Awesome Thoughts",
+    "Subject": "Awesome New Day Begins With Awesome Thoughts",
+    "MailType": "",
+    "Instagram": false,
+    "RecentPost": false,
+    "SenderName": "Example",
+    "SenderEmail": "hello@example.com",
+    "ApplyTemplate": true,
+    "FeaturedImage": "",
+    "RecipientList": [
+      "laisim.wong@hotmail.com"
+    ],
+    "MessageContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce malesuada magna quis dapibus tempor. Phasellus sed augue ante. Aenean auctor ex orci, non gravida metus porta facilisis. Suspendisse scelerisque ex vel justo accumsan placerat. Nullam eget erat placerat enim lobortis tempus eget ut libero. Praesent semper purus id aliquet porttitor. Etiam vehicula molestie accumsan. Maecenas ac tempor nibh, et dapibus dolor. Nunc a pellentesque orci. Ut auctor, urna vel interdum cursus, magna nisl pharetra mi, fermentum volutpat enim diam nec libero",
+    "FeaturedBlogger": false,
+    "SendToAllSubscribers": false
+  },
+  "archiveLink": "http:\/\/massmailer.app\/storage\/simmatrix\/mass_mailer\/mail_archive\/d0f0e0fa4f4d3ac5b2712d6a3c631aed.html",
+  "mailingList": false,
+  "viewTemplate": "vendor.simmatrix.mass-mailer.default",
+  "deliveryStatus": true,
+  "viewParameters": {
+    "title": "Awesome New Day Begins With Awesome Thoughts",
+    "subject": "Awesome New Day Begins With Awesome Thoughts",
+    "testing": "--displaying a custom parameter in presenter object--",
+    "is_archive": false,
+    "senderName": "Example",
+    "archiveLink": "http:\/\/massmailer.app\/storage\/simmatrix\/mass_mailer\/mail_archive\/d0f0e0fa4f4d3ac5b2712d6a3c631aed.html",
+    "senderEmail": "hello@example.com",
+    "messageContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce malesuada magna quis dapibus tempor. Phasellus sed augue ante. Aenean auctor ex orci, non gravida metus porta facilisis. Suspendisse scelerisque ex vel justo accumsan placerat. Nullam eget erat placerat enim lobortis tempus eget ut libero. Praesent semper purus id aliquet porttitor. Etiam vehicula molestie accumsan. Maecenas ac tempor nibh, et dapibus dolor. Nunc a pellentesque orci. Ut auctor, urna vel interdum cursus, magna nisl pharetra mi, fermentum volutpat enim diam nec libero"
+  }
+}

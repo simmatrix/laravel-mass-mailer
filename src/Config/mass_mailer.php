@@ -26,7 +26,7 @@
         | If you have no interest in reading the output: 
         |       sudo nohup php artisan queue:work --daemon --queue=yourQueueName,default > /dev/null 2>&1 &
         | If you need to refer to the output: 
-        |       sudo nohup php artisan queue:work --daemon --queue=yourQueueName,default > app/storage/logs/laravel.log &
+        |       sudo nohup php artisan queue:work --daemon --queue=yourQueueName,default > storage/logs/laravel.log &
         |
         */
         'queue_name' => '',    

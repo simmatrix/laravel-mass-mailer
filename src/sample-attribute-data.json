@@ -1,114 +1,43 @@
 {
   "params": [
     {
-      "ApplyTemplate": {
-        "label": "Apply Template",
-        "name": "ApplyTemplate",
-        "params": false,
-        "value": false
-      }
+      "ApplyTemplate": true
     },
     {
-      "MessageContent": {
-        "label": "Message",
-        "name": "MessageContent",
-        "params": false,
-        "value": ""
-      }
+      "MessageContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce malesuada magna quis dapibus tempor. Phasellus sed augue ante. Aenean auctor ex orci, non gravida metus porta facilisis. Suspendisse scelerisque ex vel justo accumsan placerat. Nullam eget erat placerat enim lobortis tempus eget ut libero. Praesent semper purus id aliquet porttitor. Etiam vehicula molestie accumsan. Maecenas ac tempor nibh, et dapibus dolor. Nunc a pellentesque orci. Ut auctor, urna vel interdum cursus, magna nisl pharetra mi, fermentum volutpat enim diam nec libero"
     },
     {
-      "RecipientList": {
-        "label": "To",
-        "name": "RecipientList",
-        "params": false,
-        "value": ""
-      }
+      "RecipientList": ["laisim.wong@hotmail.com"]
     },
     {
-      "SendToAllSubscribers": {
-        "label": "Send To All Subscribers",
-        "name": "SendToAllSubscribers",
-        "params": false,
-        "value": false
-      }
+      "SendToAllSubscribers": false
     },
     {
-      "SenderEmail": {
-        "label": "Sender Email",
-        "name": "SenderEmail",
-        "params": false,
-        "value": "hello@example.com"
-      }
+      "SenderEmail": "hello@example.com"
     },
     {
-      "SenderName": {
-        "label": "Sender Name",
-        "name": "SenderName",
-        "params": false,
-        "value": "Example"
-      }
+      "SenderName": "Example"
     },
     {
-      "Subject": {
-        "label": "Subject",
-        "name": "Subject",
-        "params": false,
-        "value": ""
-      }
+      "Subject": "Awesome New Day Begins With Awesome Thoughts"
     },
     {
-      "Title": {
-        "label": "Title",
-        "name": "Title",
-        "params": false,
-        "value": ""
-      }
+      "Title": "Awesome New Day Begins With Awesome Thoughts"
     },
     {
-      "FeaturedBlogger": {
-        "label": "Include Featured Blogger",
-        "name": "FeaturedBlogger",
-        "params": false,
-        "value": false
-      }
+      "FeaturedBlogger": false
     },
     {
-      "FeaturedImage": {
-        "label": "Featured Image",
-        "name": "FeaturedImage",
-        "params": false,
-        "value": ""
-      }
+      "FeaturedImage": ""
     },
     {
-      "Instagram": {
-        "label": "Include Instagram Feeds",
-        "name": "Instagram",
-        "params": false,
-        "value": false
-      }
+      "Instagram": false
     },
     {
-      "MailType": {
-        "label": "Mail Type",
-        "name": "MailType",
-        "params": [
-          "Newsletter",
-          "Announcement",
-          "Sponsored Post",
-          "Product Review",
-          "Invitation"
-        ],
-        "value": ""
-      }
+      "MailType": ""
     },
     {
-      "RecentPost": {
-        "label": "Include Recent Posts",
-        "name": "RecentPost",
-        "params": false,
-        "value": false
-      }
+      "RecentPost": false
     }
   ]
 }

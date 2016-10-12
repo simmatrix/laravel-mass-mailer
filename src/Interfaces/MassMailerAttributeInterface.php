@@ -8,7 +8,5 @@ interface MassMailerAttributeInterface
 {
 	public function get();
 
-	public function getData();
-
-	public function finalizeResult( MassMailerAttributeInterface $class, MassMailerAttributeParams $attribute_params );
+	public function getValue();
 }

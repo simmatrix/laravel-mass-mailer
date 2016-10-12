@@ -55,7 +55,7 @@ class MailgunMailer extends MassMailerAbstract implements MassMailerInterface
             
             $mailgun = self::getMailgunMailer();
             $domain = array_last( explode( '@', $params -> mailingList ) );
-            $subject = MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' );
+            $subject = MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' );            
             $senderEmail = MassMailerAttribute::extract( $params, $targeted_attribute = 'SenderEmail' );
             $sendToAllSubscribers = MassMailerAttribute::extract( $params, $targeted_attribute = 'SendToAllSubscribers' );
 

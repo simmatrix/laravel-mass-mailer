@@ -17,23 +17,33 @@ abstract class MassMailerAttributeAbstract implements MassMailerAttributeInterfa
      *
      * @return Returning a default boolean FALSE ( Can be overwriten by child classes )
      */
-    public function getData()
+    public function getValue()
     {
         return FALSE;
     }
 
     /**
-     * To inject any additional parameters or modify the object before returning to the frontend application ( that aren't allowed to be edited by the child class )
+     * To get the name of the child class, only the name itself, without the namespace prefix
      * 
      * @param Object $class The child class, which is an instance of Simmatrix\MassMailer\Interfaces\MassMailerAttributeInterface
-     * @param Object $attribute_params The attribute object from the child class, which would be injected with additional stuff over here
+     * @param $default_value the default value to be applied to this attribute
      *
-     * @return Object An instance of MassMailerAttributeParams, with the newly injected additional parameters
-     */
-    public function finalizeResult( MassMailerAttributeInterface $class, MassMailerAttributeParams $attribute_params )
+     * @return Array e.g. [ "ApplyTemplate" => TRUE ]
+     */    
+    protected function getParam( MassMailerAttributeInterface $class, $default_value = '' )
     {
-        $attribute_params -> name = substr( get_class( $class ), strrpos( get_class( $class ), "\\" ) + 1 );
-        unset($attribute_params -> data);
-        return $attribute_params;
+        return [ self::getName( $class ) => $default_value ];
     }
+
+    /**
+     * To get the name of the child class, only the name itself, without the namespace prefix
+     * 
+     * @param Object $class The child class, which is an instance of Simmatrix\MassMailer\Interfaces\MassMailerAttributeInterface
+     *
+     * @return String The name of the class without the namespace
+     */
+    private function getName( MassMailerAttributeInterface $class )
+    {
+        return substr( get_class( $class ), strrpos( get_class( $class ), "\\" ) + 1 );
+    }    
 }

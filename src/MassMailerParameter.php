@@ -18,28 +18,7 @@ class MassMailerParameter
      */ 
     public static function create( Request $request, MassMailerOptions $mailer_options )
     {
-        $data = $request -> input('params');
-
-        // Create a attribute object for each of the attribute
-        $attributes = collect( $data ) -> map(function( $attribute ){
-            return collect( $attribute ) -> map( function( $data, $key ){
-                
-                 $class_name = FALSE;
-
-                 // Check whether it exists in this package's directory
-                if ( file_exists( sprintf( "%s/Attributes/%s.php", __DIR__, $data['name'] ) ) ) {
-                    $class_name = sprintf( "Simmatrix\MassMailer\Attributes\%s", $data['name'] );
-
-                // Check whether it exists in the app's directory
-                } else if ( file_exists( app_path( sprintf( "MassMailer/Attributes/%s.php", $data['name'] ) ) ) ) {
-                    $class_name = sprintf( "App\MassMailer\Attributes\%s", $data['name'] );
-                }
-                       
-                return $class_name ? MassMailerAttribute::createAndPopulateData( $class_name, $data['value'] ) : [];
-            }) -> filter( function( $individual_attribute ){
-                return ! empty( $individual_attribute );  
-            });
-        }) -> toArray();
+        $attributes = $request -> input('params');
 
         // To flatten the array
         $compiled_attributes = [];
@@ -61,7 +40,7 @@ class MassMailerParameter
         // Create the archive link & put it into the MassMailerParams
         $mailer_params -> archiveLink = MassMailerArchive::getLink( $mailer_params );
         $mailer_params -> viewParameters['archiveLink'] = $mailer_params -> archiveLink;
-        
+
         return $mailer_params;
     }
 

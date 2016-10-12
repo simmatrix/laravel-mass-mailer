@@ -29,66 +29,26 @@ class MassMailerAttribute
 	}
 
 	/**
-	 * @return Array
+	 * To create the attributes in bulk at one go
+	 * 
+	 * @param Array $attribute_file_path An array containing all the file paths of attributes intended to be created
+	 * @param String $namespace The namespace for the group of attributes
+	 *
+	 * @return Array A list of instances of MassMailerAttributeInterface
 	 */
-	private static function bulkCreate( array $attribute_file_path, string $namespace )
+	private static function getAttributeParams( array $attribute_file_path, string $namespace )
 	{
 		return collect( $attribute_file_path ) -> map(function( $attribute_path ) use( $namespace ){
+			
 			$file_name = basename( $attribute_path, '.php' );
 			$class_name = sprintf( '%s%s', $namespace, $file_name );
 			$attribute = self::create( $class_name );
-			if ( $attribute ) {
-				$attribute_params = $attribute -> get();
-				return [ $attribute_params -> name => $attribute_params -> toArray() ];
-			} else {
-				return [];
-			}
+			
+			return $attribute ? $attribute -> get() : [];
+
 		}) -> filter(function( $attribute ){
 			return ! empty( $attribute );
 		}) -> toArray();
-	}
-
-	/**
-	 * To create an attribute object and populate data into it
-	 *
-	 * @param String $class_name The class name of the attribute to be created
-	 * @param $value The value passed in by user from the frontend application
-	 *
-	 * @return Object An instance of Simmatrix\MassMailer\ValueObjects\MassMailerAttributeParams
-	 */
-	public static function createAndPopulateData( string $class_name, $value = NULL )
-	{	
-		// To create the class that are located in app/MassMailer/Attributes and/or vendor/simmatrix/laravel-mass-mailer/src/Attributes
-		$attribute = MassMailerFactory::createAttribute( $class_name );
-
-		// To get the value object (Simmatrix\MassMailer\ValueObjects\MassMailerAttributeParams) that contains  from the attribute
-		$attribute_params = $attribute -> get();
-
-		if ( $value ) {
-			/**
-			 * (A) To populate the "value" property of the value object
-			 *
-			 * This is to fill in the value into the "$attribute->value" of the MassMailerAttributeParams value object
-			 */
-			$attribute_params -> value = $value;
-
-			/**
-			 * (B) To populate the "data" property of the value object
-			 *
-			 * Let's say user wanted to show the Instagram feed ($value === TRUE) and the "$attribute -> getData()" is not returning FALSE, 
-			 * then we will proceed to throw in the result returned from "$attribute -> getData()" 
-			 * into the "$attribute_params->data" property of the MassMailerAttributeParams value object
-			 *
-			 * The function "$attribute -> getData()"" will do all necessary steps to fetch the data, which in this case is the Instagram posts
-			 */
-			$data = $attribute -> getData();
-			if ( $value === TRUE && $data !== FALSE ) {
-				$attribute_params -> data = $data;
-			}
-			
-		}
-
-		return $attribute_params;
 	}
 
 	/**
@@ -100,14 +60,38 @@ class MassMailerAttribute
 	public static function get()
 	{
 		$default_attributes_file_path = File::files( __DIR__ . '/Attributes' );
-		$default_attributes = self::bulkCreate( $default_attributes_file_path, config('mass_mailer.package_namespace') . 'Attributes\\' );
+		$default_attributes_params = self::getAttributeParams( $default_attributes_file_path, config('mass_mailer.package_namespace') . 'Attributes\\' );
 
 		$custom_attributes_file_path = File::files( app_path( config('mass_mailer.attribute_path') ) );	
-		$custom_attributes = self::bulkCreate( $custom_attributes_file_path, config('mass_mailer.app_namespace') . 'Attributes\\' );
+		$custom_attributes_params = self::getAttributeParams( $custom_attributes_file_path, config('mass_mailer.app_namespace') . 'Attributes\\' );
 
-		$data = ['params' => array_merge( $default_attributes, $custom_attributes )];
+		$data = ['params' => array_merge( $default_attributes_params, $custom_attributes_params )];
 		
 		return json_encode( $data );
+	}
+
+	/**
+	 * To get the full class name based on the key name
+     * For example, to get "Simmatrix\MassMailer\Attributes\Subject" when caller passes in "Subject"
+     *
+     * @param String $key_name 
+     *
+     * @return String The full class name
+     */
+	public static function getClassName( string $key_name )
+	{
+        $class_name = FALSE;
+
+        // Check whether it exists in this package's directory
+        if ( file_exists( sprintf( "%s/Attributes/%s.php", __DIR__, $key_name ) ) ) {
+            $class_name = sprintf( "Simmatrix\MassMailer\Attributes\%s", $key_name );
+
+        // Check whether it exists in the app's directory
+        } else if ( file_exists( app_path( sprintf( "MassMailer/Attributes/%s.php", $key_name ) ) ) ) {
+            $class_name = sprintf( "App\MassMailer\Attributes\%s", $key_name );
+        }
+           
+        return $class_name;
 	}
 
 	/**
@@ -121,9 +105,10 @@ class MassMailerAttribute
 	 */
 	public static function extract( MassMailerParams $params, string $targeted_attribute, bool $should_fetch_data = self::IGNORE_INTERNALLY_FETCHED_DATA )
 	{
-		$attribute = $params -> attributes[ $targeted_attribute ];
-		return $should_fetch_data == self::RETRIEVE_INTERNALLY_FETCHED_DATA ? 
-			   $attribute -> data :
-			   $attribute -> value;
+		$class_name = self::getClassName( $targeted_attribute );
+		$attribute = self::create( $class_name );
+		$value = $params -> attributes[ $targeted_attribute ];
+
+		return $should_fetch_data == self::RETRIEVE_INTERNALLY_FETCHED_DATA ? $attribute -> getValue() : $value;
 	}
 }
