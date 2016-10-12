@@ -4,10 +4,10 @@
       "ApplyTemplate": true
     },
     {
-      "MessageContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce malesuada magna quis dapibus tempor. Phasellus sed augue ante. Aenean auctor ex orci, non gravida metus porta facilisis. Suspendisse scelerisque ex vel justo accumsan placerat. Nullam eget erat placerat enim lobortis tempus eget ut libero. Praesent semper purus id aliquet porttitor. Etiam vehicula molestie accumsan. Maecenas ac tempor nibh, et dapibus dolor. Nunc a pellentesque orci. Ut auctor, urna vel interdum cursus, magna nisl pharetra mi, fermentum volutpat enim diam nec libero"
+      "MessageContent": ""
     },
     {
-      "RecipientList": ["laisim.wong@hotmail.com"]
+      "RecipientList": ""
     },
     {
       "SendToAllSubscribers": false
@@ -19,10 +19,10 @@
       "SenderName": "Example"
     },
     {
-      "Subject": "Awesome New Day Begins With Awesome Thoughts"
+      "Subject": ""
     },
     {
-      "Title": "Awesome New Day Begins With Awesome Thoughts"
+      "Title": ""
     },
     {
       "FeaturedBlogger": false
