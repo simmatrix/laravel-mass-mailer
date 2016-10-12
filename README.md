@@ -123,7 +123,8 @@ Whereby each of the HTML field in your frontend is represented by an object, e.g
 * `label`: A user-friendly label that can be easily understood by your end-users
 * `params`: Any params that you wish to populate your HTML element (by default FALSE), e.g. returning an array of items for drop down list
 * `value`: The default value to fill in your HTML element, your frontend app should also inject the user's input into this field
-* `name`: The name of the attribute, your frontend application shouldn't modify this value at all cost, otherwise when it returned to the backend, this value wouldn't be able to be parsed and read properly
+* `name`: The name of the attribute, your frontend application shouldn't modify this value at all cost, otherwise when it returned to the backend, this value wouldn't be able to be parsed and read properly.
+
 ### 1(ii). Creating Your Custom Attributes
 
 These are the required attributes that comes with the package by default:
