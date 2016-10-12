@@ -187,7 +187,7 @@ Currently this supports the overwriting of 3 custom mailer options, namely
 public function send(Request $request)
 {
   $mailer_options = MassMailer::createMailerOptions([
-    'mailing_list' => 'xxx@xxx.com',
+    'mailing_list' => 'xxx',
     'mailgun_domain' => 'xxx@xxx.com',
     'presenter' => App\MassMailer\Presenters\YourCustomPresenter::class,
   ]);
