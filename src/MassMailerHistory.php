@@ -26,7 +26,7 @@ class MassMailerHistory
 	public static function save( MassMailerParams $params )
 	{
 		MassMailHistory::firstOrCreate([
-			'subject' => MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' ),
+			'subject' => MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'Subject' ),
 			'mailing_list' => $params -> mailingList,
 			'params' => $params,
 			'archive_link' => $params -> archiveLink,

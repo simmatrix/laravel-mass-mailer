@@ -53,8 +53,8 @@ class MailgunMailingListManager implements MassMailerMailingListInterface
      */
     public static function get( MassMailerParams $params, MassMailerOptions $mailer_options )
     {
-        $shouldSendToAllSubscribers = MassMailerAttribute::extract( $params, $targeted_attribute = 'SendToAllSubscribers' );
-        $recipientList = MassMailerAttribute::extract( $params, $targeted_attribute = 'RecipientList' );
+        $shouldSendToAllSubscribers = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'SendToAllSubscribers' );
+        $recipientList = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'RecipientList' );
 
         if ( count( $recipientList ) > 0 || $shouldSendToAllSubscribers ) {
 

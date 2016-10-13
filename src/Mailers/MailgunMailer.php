@@ -55,9 +55,9 @@ class MailgunMailer extends MassMailerAbstract implements MassMailerInterface
             
             $mailgun = self::getMailgunMailer();
             $domain = array_last( explode( '@', $params -> mailingList ) );
-            $subject = MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' );            
-            $senderEmail = MassMailerAttribute::extract( $params, $targeted_attribute = 'SenderEmail' );
-            $sendToAllSubscribers = MassMailerAttribute::extract( $params, $targeted_attribute = 'SendToAllSubscribers' );
+            $subject = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'Subject' );            
+            $senderEmail = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'SenderEmail' );
+            $sendToAllSubscribers = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'SendToAllSubscribers' );
 
             $mailgun_params = [
                 'from' => $senderEmail,
@@ -110,7 +110,7 @@ class MailgunMailer extends MassMailerAbstract implements MassMailerInterface
 
         $domain = array_last( explode( '@', $params -> mailingList ) );
         $campaign_id = md5(time().rand());
-        $subject = MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' );  
+        $subject = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'Subject' );  
         $campaign_name = sprintf( "[%s] %s", date('Y-m-d H:i:s', time()), $subject );
 
         $response = $mailgun -> post( $domain . '/campaigns',[

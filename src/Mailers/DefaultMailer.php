@@ -22,10 +22,10 @@ class DefaultMailer extends MassMailerAbstract implements MassMailerInterface
 	{
 		Mail::send( $params -> viewTemplate, $params -> viewParameters, function( $message ) use( $params, $callback ){
 
-            $subject = MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' );
-            $recipientList = MassMailerAttribute::extract( $params, $targeted_attribute = 'RecipientList' );
-            $senderEmail = MassMailerAttribute::extract( $params, $targeted_attribute = 'SenderEmail' );
-            $senderName = MassMailerAttribute::extract( $params, $targeted_attribute = 'SenderName' );
+            $subject = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'Subject' );
+            $recipientList = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'RecipientList' );
+            $senderEmail = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'SenderEmail' );
+            $senderName = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'SenderName' );
 
             $message -> bcc( $recipientList ) 
                      -> subject( $subject )
@@ -35,7 +35,7 @@ class DefaultMailer extends MassMailerAbstract implements MassMailerInterface
 
         $status = FALSE;
 
-        $subject = MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' );
+        $subject = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'Subject' );
         
         if( count( Mail::failures() ) > 0 ) {
 

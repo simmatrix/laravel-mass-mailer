@@ -11,17 +11,17 @@ use File;
 class MassMailerAttribute
 {
 	/**
-	 * @const RETRIEVE_INTERNALLY_FETCHED_DATA
+	 * @const USE_USER_INPUT
 	 */
-	const RETRIEVE_INTERNALLY_FETCHED_DATA = TRUE;
+	const USE_USER_INPUT = 'user';
 
 	/**
-	 * @const IGNORE_INTERNALLY_FETCHED_DATA
+	 * @const USE_INTERNAL_INPUT
 	 */
-	const IGNORE_INTERNALLY_FETCHED_DATA = FALSE;
+	const USE_INTERNAL_INPUT = 'internal';
 
 	/**
-	 * @return Object
+	 * @return Object An instance of Simmatrix\MassMailer\Interfaces\MassMailerAttributeInterface
 	 */	
 	public static function create( string $class_name )
 	{
@@ -29,7 +29,25 @@ class MassMailerAttribute
 	}
 
 	/**
-	 * To create the attributes in bulk at one go
+	 * To retrieve the key-value pairs of the Attribute
+	 *
+	 * @return JSON string
+	 */
+	public static function get()
+	{
+		$default_attributes_file_path = File::files( __DIR__ . '/Attributes' );
+		$default_attributes_params = self::getAttributeParams( $default_attributes_file_path, config('mass_mailer.package_namespace') . 'Attributes\\' );
+
+		$custom_attributes_file_path = File::files( app_path( config('mass_mailer.attribute_path') ) );	
+		$custom_attributes_params = self::getAttributeParams( $custom_attributes_file_path, config('mass_mailer.app_namespace') . 'Attributes\\' );
+
+		$data = ['params' => array_merge( $default_attributes_params, $custom_attributes_params )];
+		
+		return json_encode( $data );
+	}
+
+	/**
+	 * To retrieve all of the key-value pairs of the Attributes at one go
 	 * 
 	 * @param Array $attribute_file_path An array containing all the file paths of attributes intended to be created
 	 * @param String $namespace The namespace for the group of attributes
@@ -52,33 +70,42 @@ class MassMailerAttribute
 	}
 
 	/**
-	 * To retrieve all custom Attributes classes that user have added into their project
-	 * and those default one that comes with the package
+	 * To retrieve the value of the targeted attribute from the MassMailerParams instance 
 	 *
-	 * @return JSON string
+	 * @param Object  $params 		An instance of Simmatrix\MassMailer\ValueObjects\MassMailerParams
+	 * @param String  $key_name   	The key name of the targeted attribute to be retrieved
+	 *
+	 * @return The stored data contained within the attribute
 	 */
-	public static function get()
+	public static function getUserInput( MassMailerParams $params, string $key_name )
 	{
-		$default_attributes_file_path = File::files( __DIR__ . '/Attributes' );
-		$default_attributes_params = self::getAttributeParams( $default_attributes_file_path, config('mass_mailer.package_namespace') . 'Attributes\\' );
+		return $params -> attributes[ $key_name ];
+	}
 
-		$custom_attributes_file_path = File::files( app_path( config('mass_mailer.attribute_path') ) );	
-		$custom_attributes_params = self::getAttributeParams( $custom_attributes_file_path, config('mass_mailer.app_namespace') . 'Attributes\\' );
-
-		$data = ['params' => array_merge( $default_attributes_params, $custom_attributes_params )];
-		
-		return json_encode( $data );
+	/**
+	 * To retrieve the value of the targeted attribute from the getValue() function within the Attribute file
+	 *
+	 * @param Object  $params 		An instance of Simmatrix\MassMailer\ValueObjects\MassMailerParams
+	 * @param String  $key_name   	The key name of the targeted attribute to be retrieved
+	 *
+	 * @return The stored data contained within the attribute
+	 */
+	public static function getInternallyPulledData( MassMailerParams $params, string $key_name )
+	{
+		$class_name = self::getClassName( $key_name );
+		$attribute = self::create( $class_name );
+		return $attribute -> getValue();
 	}
 
 	/**
 	 * To get the full class name based on the key name
-     * For example, to get "Simmatrix\MassMailer\Attributes\Subject" when caller passes in "Subject"
+     * e.g. when caller passes in "Subject", they will get "Simmatrix\MassMailer\Attributes\Subject"
      *
      * @param String $key_name 
      *
      * @return String The full class name
      */
-	public static function getClassName( string $key_name )
+	private static function getClassName( string $key_name )
 	{
         $class_name = FALSE;
 
@@ -92,23 +119,5 @@ class MassMailerAttribute
         }
            
         return $class_name;
-	}
-
-	/**
-	 * To extract the targeted attribute from the MassMailerParams instance 
-	 *
-	 * @param Object  $params 				An instance of Simmatrix\MassMailer\ValueObjects\MassMailerParams
-	 * @param String  $targeted_attribute   The name of the targeted attribute to be retrieved
-	 * @param Boolean $should_fetch_data 	An identifier to determine whether to return result from "$targeted_attribute->data" or "$targeted_attribute->value"
-	 *
-	 * @return The stored data contained within the attribute
-	 */
-	public static function extract( MassMailerParams $params, string $targeted_attribute, bool $should_fetch_data = self::IGNORE_INTERNALLY_FETCHED_DATA )
-	{
-		$class_name = self::getClassName( $targeted_attribute );
-		$attribute = self::create( $class_name );
-		$value = $params -> attributes[ $targeted_attribute ];
-
-		return $should_fetch_data == self::RETRIEVE_INTERNALLY_FETCHED_DATA ? $attribute -> getValue() : $value;
-	}
+	}	
 }

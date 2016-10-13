@@ -16,7 +16,7 @@ class {{ $class_name }} extends MassMailerAttributeAbstract implements MassMaile
      */
     public function get()
     {
-        return parent::getParam( $this, $default_value = '' );
+        return parent::getParam( $this @if( $has_value ), $default_value = @if( $is_boolean || $is_integer ) {{ $default_value }} @else '{{ $default_value }}' @endif @endif);
     }
 
     /**

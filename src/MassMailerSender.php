@@ -17,7 +17,7 @@ class MassMailerSender
 	{
 		// Check if user specify any custom name for the queue in app/config/mass_mailer.php, otherwise use the default queue
 		$queue_name = empty( config('mass_mailer.queue_name') ) ? 'default' : config('mass_mailer.queue_name');
-		$subject = MassMailerAttribute::extract( $params, $targeted_attribute = 'Subject' );
+		$subject = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'Subject' );
 
 		Log::info( 'Queued up the mass mail for delivery. Email Subject: ' . $subject );
 		
