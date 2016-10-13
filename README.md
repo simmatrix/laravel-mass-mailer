@@ -59,6 +59,7 @@ Each HTML element in your frontend is represented by a key-value object.
 { "SenderEmail": "hello@example.com" }
 ```
 > The purpose of creating an attirbute to represent your HTML elements is so that it can be easily parsed when it returned from your frontend application.
+
 ### 1(ii). Creating Your Own Attributes
 
 These are the required attributes that comes with the package _by default_:
