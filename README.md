@@ -144,7 +144,7 @@ php artisan make:mass-mailer-presenter YourCustomPresenter
 The console will prompt you to enter the name of your template. 
 * **If you place your template file in**: `resources/views/vendor/simmatrix/mass-mailer/lorem.blade.php`
 * **Then key in this into the console**: `vendor.simmatrix.mass-mailer.lorem`
-* **A new presenter will be generated at**: `app/MassMailer/Presenters/LoremIpsumPresenter.php`
+* **A new presenter will be generated at**: `app/MassMailer/Presenters/YourCustomPresenter.php`
 
 ### 3(ii). Adding Data into Your Custom Presenter
 Open the file and start writing those parameters that you wish to pass to your blade view template in the `setParameters()` function.
