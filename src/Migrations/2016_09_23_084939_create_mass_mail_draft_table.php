@@ -17,7 +17,7 @@ class CreateMassMailDraftTable extends Migration
             Schema::create( 'mass_mail_draft', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
-                $table->json('params');
+                $table->longText('params');
                 $table->timestamps();
             });
         }
