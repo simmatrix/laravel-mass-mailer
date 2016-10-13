@@ -129,7 +129,9 @@ public function send(Request $request)
     'mailgun_domain' => 'xxx@xxx.com',
     'presenter' => App\MassMailer\Presenters\YourCustomPresenter::class,
   ]);
-    MassMailer::send( MassMailer::getParams( $request ), $mailer_options );      
+
+  // Pass it to your options to the getParams()
+  MassMailer::send( MassMailer::getParams( $request, $mailer_options ) );      
 }
 ```
 
