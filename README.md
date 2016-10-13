@@ -127,7 +127,7 @@ public function send(Request $request)
   $mailer_options = MassMailer::createMailerOptions([
     'mailing_list' => 'xxx',
     'mailgun_domain' => 'xxx@xxx.com',
-    'presenter' => App\MassMailer\Presenters\YourCustomPresenter::class,
+    'presenter' => \App\MassMailer\Presenters\YourCustomPresenter::class,
   ]);
 
   // Pass it to your options to the getParams()
