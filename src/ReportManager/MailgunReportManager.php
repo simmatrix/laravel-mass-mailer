@@ -16,6 +16,6 @@ class MailgunReportManager implements MassMailerReportManagerInterface
 	{
 		$mail = new MailgunCore( env( 'MAILGUN_SECRET' ) );
         $response = $mail -> get( env('MAILGUN_DOMAIN') . '/campaigns' );
-        return json_encode($response -> http_response_body -> items);
+        return $response -> http_response_body -> items;
 	}
 }

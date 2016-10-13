@@ -11,6 +11,6 @@ class DefaultReportManager implements MassMailerReportManagerInterface
 	 */
 	public static function get()
 	{
-		return json_encode(['message' => 'Please use a third party mail driver such as Mailgun which offers post-delivery statistics.']);
+		return ['message' => 'Please use a third party mail driver such as Mailgun which offers post-delivery statistics.'];
 	}
 }

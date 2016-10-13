@@ -142,7 +142,7 @@ class MailgunMailingListManager implements MassMailerMailingListInterface
             return [];
         }
 
-        return json_encode( $result );
+        return $result;
 	}
 
     /**
