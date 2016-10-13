@@ -84,7 +84,7 @@ class MassMailerProxy
      */    
     public static function getDrafts()
     {
-        return MassMailerDraft::all();
+        return MassMailerDraft::all() -> all();
     }   
 
     /**
@@ -94,7 +94,7 @@ class MassMailerProxy
      */  
     public static function getDraft( int $id )
     {
-        return MassMailerDraft::get( $id );
+        return MassMailerDraft::get( $id ) ?? [];
     }   
 
     /**
