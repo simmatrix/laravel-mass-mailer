@@ -61,13 +61,13 @@ abstract class MassMailerPresenterAbstract implements MassMailerPresenterInterfa
     public function getDefaultViewParameters()
     {
         return [
-            'subject'       =>  MassMailerAttribute::getUserInput( $this -> mailerParameters, $targeted_attribute = 'Subject' ),
-            'title'         =>  MassMailerAttribute::getUserInput( $this -> mailerParameters, $targeted_attribute = 'Title' ),
-            'messageContent'=>  MassMailerAttribute::getUserInput( $this -> mailerParameters, $targeted_attribute = 'MessageContent' ),
-            'senderEmail'   =>  MassMailerAttribute::getUserInput( $this -> mailerParameters, $targeted_attribute = 'SenderEmail' ),
-            'senderName'    =>  MassMailerAttribute::getUserInput( $this -> mailerParameters, $targeted_attribute = 'SenderName' ),
-            'archiveLink'   =>  $this -> mailerParameters -> archiveLink,           
-            'is_archive'    =>  self::IS_NOT_ARCHIVE
+            'subject'         =>  MassMailerAttribute::getUserInput( $this -> mailerParameters, $targeted_attribute = 'Subject' ),
+            'title'           =>  MassMailerAttribute::getUserInput( $this -> mailerParameters, $targeted_attribute = 'Title' ),
+            'message_content' =>  MassMailerAttribute::getUserInput( $this -> mailerParameters, $targeted_attribute = 'MessageContent' ),
+            'sender_email'    =>  MassMailerAttribute::getUserInput( $this -> mailerParameters, $targeted_attribute = 'SenderEmail' ),
+            'sender_name'     =>  MassMailerAttribute::getUserInput( $this -> mailerParameters, $targeted_attribute = 'SenderName' ),
+            'archive_link'    =>  $this -> mailerParameters -> archiveLink,           
+            'is_archive'      =>  self::IS_NOT_ARCHIVE
         ];
     }
 }
