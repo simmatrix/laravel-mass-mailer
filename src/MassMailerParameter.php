@@ -18,7 +18,7 @@ class MassMailerParameter
      */ 
     public static function create( Request $request, MassMailerOptions $mailer_options )
     {
-        $attributes = $request -> input('params');
+        $attributes = $request -> input('data');
 
         // To flatten the array
         $compiled_attributes = [];
