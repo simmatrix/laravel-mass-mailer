@@ -54,9 +54,25 @@ Retrieve the key-value pairs using the command below, then this is what your fro
 ```
 return MassMailer::getAttributes();
 ```
-Each HTML element in your frontend is represented by a key-value object.
+Each HTML element in your frontend is represented in key-value form.
 ```
-{ "SenderEmail": "hello@example.com" }
+{
+  "data": {
+    "ApplyTemplate": true,
+    "MessageContent": "",
+    "RecipientList": "",
+    "SendToAllSubscribers": false,
+    "SenderEmail": "noreply@nuffnang.com",
+    "SenderName": "Nuffnang",
+    "Subject": "",
+    "Title": "",
+    "FeaturedBlogger": false,
+    "FeaturedImage": "",
+    "Instagram": false,
+    "MailType": "",
+    "RecentPost": false
+  }
+}
 ```
 > The purpose of creating an attirbute to represent your HTML element is so that it can be easily parsed when it returned from your frontend application.
 

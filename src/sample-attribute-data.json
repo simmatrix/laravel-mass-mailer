@@ -1,43 +1,17 @@
 {
-  "data": [
-    {
-      "ApplyTemplate": true
-    },
-    {
-      "MessageContent": ""
-    },
-    {
-      "RecipientList": ""
-    },
-    {
-      "SendToAllSubscribers": false
-    },
-    {
-      "SenderEmail": "hello@example.com"
-    },
-    {
-      "SenderName": "Example"
-    },
-    {
-      "Subject": ""
-    },
-    {
-      "Title": ""
-    },
-    {
-      "FeaturedBlogger": false
-    },
-    {
-      "FeaturedImage": ""
-    },
-    {
-      "Instagram": false
-    },
-    {
-      "MailType": ""
-    },
-    {
-      "RecentPost": false
-    }
-  ]
+  "data": {
+    "ApplyTemplate": true,
+    "MessageContent": "",
+    "RecipientList": "",
+    "SendToAllSubscribers": false,
+    "SenderEmail": "noreply@nuffnang.com",
+    "SenderName": "Nuffnang",
+    "Subject": "",
+    "Title": "",
+    "FeaturedBlogger": false,
+    "FeaturedImage": "",
+    "Instagram": false,
+    "MailType": "",
+    "RecentPost": false
+  }
 }
