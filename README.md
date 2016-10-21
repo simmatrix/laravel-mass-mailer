@@ -66,11 +66,7 @@ Each HTML element in your frontend is represented in key-value form.
     "SenderName": "Nuffnang",
     "Subject": "",
     "Title": "",
-    "FeaturedBlogger": false,
-    "FeaturedImage": "",
     "Instagram": false,
-    "MailType": "",
-    "RecentPost": false
   }
 }
 ```
