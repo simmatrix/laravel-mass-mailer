@@ -41,7 +41,7 @@ class MassMailerAttribute
 		$custom_attributes_file_path = File::files( app_path( config('mass_mailer.attribute_path') ) );	
 		$custom_attributes_params = self::getAttributeParams( $custom_attributes_file_path, config('mass_mailer.app_namespace') . 'Attributes\\' );
 
-		return ['data' => array_merge( $default_attributes_params, $custom_attributes_params )];
+		return ['data' => array_collapse( array_merge( $default_attributes_params, $custom_attributes_params ) )];
 	}
 
 	/**
