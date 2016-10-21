@@ -50,11 +50,11 @@ php artisan vendor:publish --provider="Simmatrix\MassMailer\Providers\MassMailer
 
 > Attributes represents the HTML elements
 
-Retrieve the key-value pairs using the command below, then this is what your frotnend application will receive: [Sample Response](https://github.com/simmatrix/laravel-mass-mailer/blob/master/src/sample-attribute-data.json)
+Retrieve the key-value pairs using the command below:
 ```
 return MassMailer::getAttributes();
 ```
-Each HTML element in your frontend is represented in key-value form.
+Here's the sample response. Each HTML element in your frontend is represented in key-value form.
 ```
 {
   "data": {
