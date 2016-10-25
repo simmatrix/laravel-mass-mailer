@@ -44,20 +44,21 @@ class MailgunMailer extends MassMailerAbstract implements MassMailerInterface
      * @param Simmatrix\MassMailer\ValueObjects\MassMailerParams  $params An object holding all data needed for the delivery of email
      *
      * @return Boolean To indicate whether the delivery is successful or not
-     */	
-	public static function send( MassMailerParams $params, $callback )
-	{
+     */ 
+    public static function send( MassMailerParams $params, $callback )
+    {
+        $domain = array_last( explode( '@', $params -> mailingList ) );
+        $subject = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'Subject' );            
+        $senderEmail = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'SenderEmail' );
+        $sendToAllSubscribers = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'SendToAllSubscribers' );
+
         /**
          * Reason for needing a mailing list
          * To prevent breaking the privacy policy because without a mailing list, each recipient will be able to see other recipients' email addresses in the "TO" field
          */
         if ( $params -> mailingList ) {
             
-            $mailgun = self::getMailgunMailer();
-            $domain = array_last( explode( '@', $params -> mailingList ) );
-            $subject = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'Subject' );            
-            $senderEmail = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'SenderEmail' );
-            $sendToAllSubscribers = MassMailerAttribute::getUserInput( $params, $targeted_attribute = 'SendToAllSubscribers' );
+            $mailgun = self::getMailgunMailer();            
 
             $mailgun_params = [
                 'from' => $senderEmail,
@@ -97,7 +98,7 @@ class MailgunMailer extends MassMailerAbstract implements MassMailerInterface
             return FALSE;
 
         }
-	}
+    }
 
     /**
      * To create a campaign in Mailgun
