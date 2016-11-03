@@ -45,7 +45,7 @@ class MassMailerDraft
 
 	public static function delete( int $id )
 	{
-		MassMailerDraft::destroy( $id );
+		MassMailDraft::destroy( $id );
 	}
 
 }
