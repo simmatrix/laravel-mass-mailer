@@ -19,7 +19,7 @@ class MassMailerOptions extends \Chalcedonyt\ValueObject\ValueObject
     /**
      * @var $presenter
      */
-    protected $presenter = DefaultMassMailerPresenter::class;
+    public $presenter = DefaultMassMailerPresenter::class;
 
     /**
      *  @param   $mailing_list

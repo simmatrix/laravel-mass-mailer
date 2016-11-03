@@ -102,9 +102,10 @@ class MassMailerProxy
      * 
      * @return void
      */  
-    public static function saveDraft( Request $request )
+    public static function saveDraft( Request $request, MassMailerOptions $mailer_options = NULL )
     {
-        MassMailerDraft::save( $request );
+        $mailer_options = $mailer_options ?? self::createMailerOptions([]);
+        MassMailerDraft::save( $request, $mailer_options );
     }
 
     /**

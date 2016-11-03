@@ -4,6 +4,7 @@ namespace Simmatrix\MassMailer;
 
 use Log;
 use Simmatrix\MassMailer\Models\MassMailDraft;
+use Simmatrix\MassMailer\ValueObjects\MassMailerOptions;
 use Simmatrix\MassMailer\MassMailerProxy as MassMailer;
 use Illuminate\Http\Request;
 
@@ -34,11 +35,11 @@ class MassMailerDraft
 	 *
 	 * @return void
 	 */
-	public static function save( Request $request )
+	public static function save( Request $request, MassMailerOptions $mailer_options )
 	{
 		MassMailDraft::firstOrCreate([
 			'name' => $request -> input( 'draft_name' ),
-			'params' => MassMailer::getParams( $request ),
+			'params' => MassMailer::getParams( $request, $mailer_options ),
 		]);
 	}	
 
