@@ -41,6 +41,11 @@ class MassMailerDraft
 			'name' => $request -> input( 'draft_name' ),
 			'params' => MassMailer::getParams( $request, $mailer_options ),
 		]);
-	}	
+	}
+
+	public static function delete( int $id )
+	{
+		MassMailerDraft::destroy( $id );
+	}
 
 }

@@ -108,6 +108,11 @@ class MassMailerProxy
         MassMailerDraft::save( $request, $mailer_options );
     }
 
+    public static function deleteDraft( int $id )
+    {
+        MassMailerDraft::delete( $id );
+    }
+
     /**
      * To save a mass mailer history
      *
