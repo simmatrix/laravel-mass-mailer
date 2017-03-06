@@ -18,7 +18,7 @@ class CreateMassMailHistoryTable extends Migration
                 $table->increments('id');
                 $table->string('subject');
                 $table->string('mailing_list');
-                $table->longText('params');
+                $table->longText('params')->nullable();
                 $table->string('archive_link')->nullable();
                 $table->boolean('success');
                 $table->timestamps();
