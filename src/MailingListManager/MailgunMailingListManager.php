@@ -61,8 +61,8 @@ class MailgunMailingListManager implements MassMailerMailingListInterface
             // -- if it is being set to send to all of the subscribers, then use the default mailing list
             if ( $shouldSendToAllSubscribers ) {
                 
-                $mailing_list = $mailer_options -> mailingList ?? config('mass_mailer.mailing_list');
-                $mailgun_domain = $mailer_options -> mailgunDomain ?? env('MAILGUN_DOMAIN');
+                $mailing_list = $mailer_options -> mailing_list ?? config('mass_mailer.mailing_list');
+                $mailgun_domain = $mailer_options -> mailgun_domain ?? env('MAILGUN_DOMAIN');
                 
                 return sprintf("%s@%s", $mailing_list, $mailgun_domain);
 
@@ -70,7 +70,7 @@ class MailgunMailingListManager implements MassMailerMailingListInterface
             } else {
 
                 // Get the Mailgun domain 
-                $mailgun_domain = $mailer_options -> mailgunDomain ?? env('MAILGUN_DOMAIN');
+                $mailgun_domain = $mailer_options -> mailgun_domain ?? env('MAILGUN_DOMAIN');
 
                 // create a a custom mailing list
                 $mailing_list_address = sprintf("%s%s@%s", 'custom.mailing.list.', date('YmdHis', time()), $mailgun_domain);
