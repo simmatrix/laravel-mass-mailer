@@ -29,6 +29,7 @@ class MassMailerParameter
         $mailer_params -> viewParameters = $presenter -> getViewParameters();
 
         // Dealing with the mailng list & put it into the MassMailerParams
+        $mailer_params -> originalMailingList = $mailer_options -> mailing_list;
         $mailer_params -> mailingList = MassMailerMailingList::get( $mailer_params, $mailer_options );  
 
         // Create the archive link & put it into the MassMailerParams

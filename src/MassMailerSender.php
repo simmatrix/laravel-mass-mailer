@@ -21,6 +21,6 @@ class MassMailerSender
 
 		Log::info( 'Queued up the mass mail for delivery. Email Subject: ' . $subject );
 		
-		Bus::dispatch( ( new SendingMassMails( $params ) ) -> onQueue( $queue_name ) );		
+		Bus::dispatchToQueue( ( new SendingMassMails( $params ) ) -> onQueue( $queue_name ) );
 	}	
 }

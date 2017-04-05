@@ -44,11 +44,13 @@ class SendingMassMails implements ShouldQueue
             $this -> params -> deliveryStatus = $delivery_status;
 
             // Keep a record in the database
-			MassMailerHistory::save( $this -> params );
+            MassMailerHistory::save( $this -> params );
 
-            // Remove the mailing list
-            MassMailerMailingList::delete( $this -> params -> mailingList );
-		});
+            // Remove the mailing list if it is temporary list
+            if ($this -> params -> mailingList != $this -> params -> originalMailingList) {
+                MassMailerMailingList::delete( $this -> params -> mailingList );
+            }
+        });
     }
 
     /**
@@ -59,10 +61,10 @@ class SendingMassMails implements ShouldQueue
      */
     public function failed( \Exception $exception )
     {
-    	// Send an email to the administrator
+        // Send an email to the administrator
         Mail::send('vendor.simmatrix.mass-mailer.failed_job_alert', ['error_message' => $exception -> getMessage()] , function( $message ) {
-        	$message -> from( config('mail.from.address'), config('mail.from.name') );
-        	$message -> to( config('mass_mailer.admin_email') );
+            $message -> from( config('mail.from.address'), config('mail.from.name') );
+            $message -> to( config('mass_mailer.admin_email') );
         });
 
         // Log down the error

@@ -61,10 +61,7 @@ class MailgunMailingListManager implements MassMailerMailingListInterface
             // -- if it is being set to send to all of the subscribers, then use the default mailing list
             if ( $shouldSendToAllSubscribers ) {
                 
-                $mailing_list = $mailer_options -> mailing_list ?? config('mass_mailer.mailing_list');
-                $mailgun_domain = $mailer_options -> mailgun_domain ?? env('MAILGUN_DOMAIN');
-                
-                return sprintf("%s@%s", $mailing_list, $mailgun_domain);
+                return $mailer_options -> mailing_list ?? config('mass_mailer.mailing_list');
 
             // -- else we will need to create a custom mailing list ( an alias address that represents more than 1 email addresses )
             } else {
